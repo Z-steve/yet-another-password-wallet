@@ -1,0 +1,19 @@
+{
+  "name": "yet-another-password-wallet",
+  "version": "1.0.0",
+  "description": "Yet Another Password Wallet - Programmazione Web UNIMI Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabriziofadigati/yet-another-password-wallet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fabriziofadigati/yet-another-password-wallet/issues"
+  },
+  "homepage": "https://github.com/fabriziofadigati/yet-another-password-wallet#readme"
+}
