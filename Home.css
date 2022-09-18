@@ -158,70 +158,6 @@
    margin: 27px 0 0;
  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  @media (max-width: 1199px) {
    .u-section-2 .u-sheet-1 {
      min-height: 1131px;
@@ -254,25 +190,6 @@
    .u-section-2 .u-icon-2 {
      padding: 15px;
    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
  }
 
@@ -323,24 +240,6 @@
      padding-right: 20px;
    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  }
 
  @media (max-width: 575px) {
@@ -384,28 +283,6 @@
    transform: rotate(0deg) scale(1) translateX(0px) translateY(0px) !important;
  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  .u-section-2 .u-list-item-1,
  .u-section-2 .u-list-item-1:before,
  .u-section-2 .u-list-item-1>.u-container-layout:before {
@@ -429,15 +306,6 @@
  .u-container-layout.hover .u-section-2 .u-list-item-1 {
    transform: rotate(0deg) scale(1) translateX(0px) translateY(0px) !important;
  }
-
-
-
-
-
-
-
-
-
 
  .u-section-2 .u-btn-1,
  .u-section-2 .u-btn-1:before,
@@ -510,6 +378,7 @@
    margin: -617px 178px 60px auto;
    padding: 6px 20px 7px;
  }
+
 
  @media (max-width: 1199px) {
    .u-section-3 .u-layout-cell-1 {
