@@ -1,0 +1,34 @@
+.headerPart {
+    background: url("images/background.jpg");
+    min-height: 700px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center; 
+}
+
+.headerTitle {
+    margin-top: 150px;
+    text-shadow: 2px 2px black;
+}
+
+
+@media screen and (min-width: 1024px) {
+    .headerPart {
+        width: 100%;
+        min-height: 800px;
+    }
+    .headerTitle {
+        margin-top: 250px;
+        font-size: 100px !important;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    .headerPart {
+        min-height: 940px;
+    }
+    .headerTitle {
+        margin-top: 300px;
+        font-size: 100px !important;
+    }
+}
