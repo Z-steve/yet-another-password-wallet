@@ -1,9 +1,45 @@
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+body {
+    background-color: rgb(242, 242, 242);
+}
+
+.cred-icon {
+    margin-top: 30px;
+    width:30%;
+}
+
+.cred-text {
+    margin-top: 20px;
+}
+
+.cred-box {
+    margin-top: 20px;
+}
+
+.footerPart {
+    background: url("images/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100px;
+}
+
 .headerPart {
     background: url("images/background.jpg");
     min-height: 700px;
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center; 
+    background-position: center center;
 }
 
 .headerTitle {
@@ -17,9 +53,10 @@
         width: 100%;
         min-height: 800px;
     }
+
     .headerTitle {
         margin-top: 250px;
-        font-size: 100px !important;
+        font-size: 64px !important;
     }
 }
 
@@ -27,8 +64,9 @@
     .headerPart {
         min-height: 940px;
     }
+
     .headerTitle {
         margin-top: 300px;
-        font-size: 100px !important;
+        font-size: 80px !important;
     }
 }
