@@ -1,3 +1,8 @@
+html {
+    scroll-behavior: smooth;
+}
+
+
 html,
 body,
 h1,
@@ -16,7 +21,7 @@ body {
 
 .cred-icon {
     margin-top: 30px;
-    width:30%;
+    width: 30%;
 }
 
 .cred-text {
@@ -48,6 +53,35 @@ body {
 }
 
 
+
+
+
+
+/* MEDIA QUERIES */
+
+
+@media screen and (min-width: 360px) {
+    #credBox {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+
+@media screen and (min-width: 500px) {
+    #credBox {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #credBox {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+}
+
+
 @media screen and (min-width: 1024px) {
     .headerPart {
         width: 100%;
@@ -56,7 +90,19 @@ body {
 
     .headerTitle {
         margin-top: 250px;
-        font-size: 64px !important;
+    }
+
+    #credBox {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+
+}
+
+@media screen and (min-width: 1440px) {
+    #credBox {
+        padding-left: 220px;
+        padding-right: 220px;
     }
 }
 
@@ -67,6 +113,27 @@ body {
 
     .headerTitle {
         margin-top: 300px;
-        font-size: 80px !important;
+        font-size: 64px !important;
+    }
+
+    #credBox {
+        padding-left: 270px;
+        padding-right: 270px;
+    }
+}
+
+
+@media screen and (min-width: 2560px) {
+    .headerPart {
+        min-height: 1100px;
+    }
+
+    .headerTitle {
+        font-size: 75px !important;
+    }
+    
+    #credBox {
+        padding-left: 300px;
+        padding-right: 300px;
     }
 }
