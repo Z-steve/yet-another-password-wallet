@@ -37,67 +37,66 @@
     <br>
     <br>
 
-
     <section id="credentials">
+
         <div class="w3-center">
             <h1 class="w3-xxlarge">CREDENTIALS</h1>
         </div>
 
         <br>
 
-
         <div id="credBox" class="w3-row-padding w3-center">
 
-            <div class="w3-third w3-row-padding w3-center cred-box">
+            <div id="default-facebook" class="w3-third w3-row-padding w3-center cred-box">
                 <div class="w3-card w3-white w3-container w3-hover-shadow w3-center" style="min-height:200px">
                     <img class="cred-icon w3-center" src="images/facebook.png" alt="facebook-icon">
                     <h3 class="cred-text w3-center">FACEBOOK</h3>
                 </div>
             </div>
 
-            <div class="w3-third w3-row-padding cred-box">
+            <div id="default-instagram" class="w3-third w3-row-padding cred-box">
                 <div class="w3-card w3-white w3-container w3-hover-shadow w3-center" style="min-height:200px">
                     <img class="cred-icon w3-center" src="images/instagram.png" alt="instagram-icon">
                     <h3 class="cred-text w3-center">INSTAGRAM</h3>
                 </div>
             </div>
 
-            <div class="w3-third w3-row-padding cred-box">
+            <div id="default-linkedin" class="w3-third w3-row-padding cred-box">
                 <div class="w3-card w3-white w3-container w3-hover-shadow w3-center" style="min-height:200px">
                     <img class="w3-center cred-icon w3-center" src="images/linkedin.png" alt="linkedin-icon">
                     <h3 class="cred-text w3-center">LINKEDIN</h3>
                 </div>
             </div>
 
-            <div class="w3-third w3-row-padding cred-box ">
+            <div id="default-twitter" class="w3-third w3-row-padding cred-box ">
                 <div class="w3-card w3-white w3-container w3-hover-shadow w3-center" style="min-height:200px">
                     <img class="cred-icon w3-center" src="images/twitter.png" alt="twitter-icon">
                     <h3 class="cred-text w3-center">TWITTER</h3>
                 </div>
             </div>
 
-            <div class="w3-third w3-row-padding cred-box ">
+            <div id="default-gmail" class="w3-third w3-row-padding cred-box ">
                 <div class="w3-card w3-white w3-container w3-hover-shadow w3-center" style="min-height:200px">
                     <img class="cred-icon w3-center" src="images/gmail.png" alt="gmail-icon">
                     <h3 class="cred-text w3-center">GMAIL</h3>
                 </div>
             </div>
 
-            <div class="w3-third w3-row-padding cred-box ">
+            <div id="default-pinterest" class="w3-third w3-row-padding cred-box ">
                 <div class="w3-card w3-white w3-container w3-hover-shadow w3-center" style="min-height:200px">
                     <img class="cred-icon w3-center" src="images/pinterest.png" alt="pinterest-icon">
                     <h3 class="cred-text w3-center">PINTEREST</h3>
                 </div>
             </div>
 
-            <div class="w3-third w3-row-padding cred-box ">
+            <div id="default-github" class="w3-third w3-row-padding cred-box ">
                 <div class="w3-card w3-white w3-container w3-hover-shadow w3-center" style="min-height:200px">
                     <img class="cred-icon w3-center" src="images/github.png" alt="github-icon">
                     <h3 class="cred-text w3-center">GITHUB</h3>
                 </div>
             </div>
 
-            <div class="w3-third w3-row-padding cred-box ">
+            <div id="default-reddit" class="w3-third w3-row-padding cred-box ">
                 <div class="w3-card w3-white w3-container w3-hover-shadow w3-center" style="min-height:200px">
                     <img class="cred-icon w3-center" src="images/reddit.png" alt="reddit-icon">
                     <h3 class="cred-text w3-center">REDDIT</h3>
@@ -105,36 +104,34 @@
             </div>
 
 
-            <div class="w3-third w3-row-padding cred-box ">
+            <div id="default-tiktok" class="w3-third w3-row-padding cred-box ">
                 <div class="w3-card w3-white w3-container w3-hover-shadow w3-center" style="min-height:200px">
                     <img class="cred-icon w3-center" src="images/tiktok.png" alt="tiktok-icon">
                     <h3 class="cred-text w3-center">TIKTOK</h3>
                 </div>
             </div>
 
-            <div class="w3-third w3-row-padding cred-box ">
+            <div id="default-snapchat" class="w3-third w3-row-padding cred-box ">
                 <div class="w3-card w3-white w3-container w3-hover-shadow w3-center" style="min-height:200px">
                     <img class="cred-icon w3-center" src="images/snapchat.png" alt="snapchat-icon">
                     <h3 class="cred-text w3-center">SNAPCHAT</h3>
                 </div>
             </div>
 
-            <div class="w3-third w3-row-padding cred-box"
-                onclick="document.getElementById('id01').style.display='block'">
+            <div id="add-cred-box" class="w3-third w3-row-padding cred-box"
+                onclick="showModalPopup()">
                 <div class="w3-card w3-white w3-container w3-hover-shadow w3-center" style="min-height:200px">
                     <img class="cred-icon w3-center" src="images/add.png" alt="add-icon">
                     <h3 class="cred-text w3-center">ADD</h3>
                 </div>
             </div>
 
-
-            <div class="w3-third w3-row-padding cred-box" onclick="exportCred()">
+            <div id="export-creds" class="w3-third w3-row-padding cred-box" onclick="exportCred()">
                 <div class="w3-card w3-white w3-container w3-hover-shadow w3-center" style="min-height:200px">
                     <img class="cred-icon w3-center" src="images/export.png" alt="export-icon">
                     <h3 class="cred-text w3-center">EXPORT</h3>
                 </div>
             </div>
-
 
         </div>
     </section>
@@ -151,39 +148,39 @@
     </footer>
 
     <!-- Modal -->
-    <div id="id01" class="w3-modal w3-center" style="display: none;">
+    <div id="modal-popup" class="w3-modal w3-center" style="display: none;">
         <div class="w3-modal-content w3-card w3-white-4 w3-animate-top">
             <header class="w3-container">
-                <span onclick="document.getElementById('id01').style.display='none'"
+                <span onclick="closeModalPopup()"
                     class="w3-button w3-medium w3-display-topright">
 
                     <i class="fa fa-close"></i>
 
                 </span>
-                <h4 class="w3-center">ADD CREDENTIAL</h4>
+                <h4 id="modal-heading" class="w3-center"></h4>
             </header>
             <div class="w3-padding">
                 <div class="w3-container w3-card w3-white-4">
                     <div class="w3-section">
                         <label>Credential Name</label>
-                        <input class="w3-input" type="text" required="">
+                        <input id="modal-cred-name" class="w3-input" type="text" required="">
                     </div>
                     <div class="w3-section">
                         <label>Email</label>
-                        <input class="w3-input" type="text" required="">
+                        <input id="modal-email" class="w3-input" type="text" required="">
                     </div>
                     <div class="w3-section">
                         <label>Password</label>
-                        <input class="w3-input" type="password" required="">
+                        <input id="modal-password" class="w3-input" type="password" required="">
                     </div>
                     <div class="w3-section">
                         <label>Description</label>
-                        <textarea class="w3-input" placeholder="Add notes"></textarea>
+                        <textarea id="modal-description" class="w3-input" placeholder="Add notes"></textarea>
                     </div>
                 </div>
                 <br>
-                <button class="w3-button w3-large w3-center">SAVE</button>
-                <button class="w3-button w3-large w3-center">REMOVE</button>
+                <button id="modal-save-button" class="w3-button w3-large w3-center">SAVE</button>
+                <button id="modal-remove-button" class="w3-button w3-large w3-center">REMOVE</button>
             </div>
         </div>
     </div>
