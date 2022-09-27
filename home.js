@@ -105,17 +105,30 @@ function saveCred(credBoxId) {
 
     if (credBoxId === undefined) {
 
-        // Creazione di un random ID per la nuova credBox
+        // Creazione di un random ID per la nuova credenziale
         credBoxId = self.crypto.randomUUID();
+        console.log(credBoxId);
 
-        var cred = document.getElementById('cred-box-template');
 
-        // Salva credenziale nel documento
-        document.getElementById('cred-box-template').content.cloneNode(true);
+        
+
+
+
+
+
+        // Aggiungi credenziale nella credBox
+        var template = document.getElementById('cred-box-template');
+        var clone = document.importNode(template.content, true);
+        clone.setAttribute("id", credBoxId);
+        document.getElementById("credBox").appendChild(clone);
+        // document.getElementById('cred-box-template').content.cloneNode(true);
+
         // Aggiungo l'id alla nuova credBox
-        cred.id = credBoxId;
+        
+        console.log(cred);
         // Aggiungi onclick
         cred.addEventListener('click', showModalPopup(credBoxId));
+        // localStorage.setItem(credBoxId, )
         cred.querySelector('h3').textContent = modalCredName.value;
 
         // Aggiungi Credential Box
