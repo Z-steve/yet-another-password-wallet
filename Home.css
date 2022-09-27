@@ -30,6 +30,7 @@ body {
 
 .cred-box {
     margin-top: 20px;
+    cursor: pointer;
 }
 
 .footerPart {
@@ -51,8 +52,6 @@ body {
     margin-top: 150px;
     text-shadow: 2px 2px black;
 }
-
-
 
 
 
