@@ -1,4 +1,25 @@
-// Bisogna chiamarla una sola volta per 
+// Crea elemento div cred box secondo template
+function addCredToCredBox(credBoxId, credName) {
+
+    // Aggiungi credenziale nella credBox
+    var template = document.getElementById('cred-box-template');
+    var clone = document.importNode(template.content, true);
+
+    // Metti attributo id nel div main
+    clone.firstElementChild.id = credBoxId;
+
+    // Aggiungi attributo onclick nel div main
+    clone.firstElementChild.setAttribute('onclick', "showModalPopup('" + credBoxId + "')");
+
+    // Aggiungi cred name nel titolo della credenziale
+    clone.querySelector('h3').textContent = credName;
+
+    // Aggiungi la nuova credenziale nel cred box
+    document.getElementById("credBox").appendChild(clone);
+
+}
+
+// Viene chiamata ad ogni accesso alla pagina per la persistenza dei dati 
 function fillDefaultCred() {
 
     // Controlla se è già stato fatto il preset delle credenziali di default
@@ -19,15 +40,34 @@ function fillDefaultCred() {
 
     }
 
+    // Cicla chiavi non default
+    for (var i = 0; i < localStorage.length; i++) {
+
+        var key = localStorage.key(i);
+
+        if (!key.includes("default")) {
+
+            // Ottieni oggetto credenziale
+            var credential = JSON.parse(localStorage.getItem(key));
+
+            // Aggiungi div cred box della credenziale non-default
+            addCredToCredBox(key, credential.credentialName);
+
+
+        }
+    }
+
 }
+
+
 
 function showModalPopup(credBoxId) {
 
 
     // Se gli passo l'id e la credbox è una default allora ...
-    if (credBoxId !== undefined && credBoxId.includes("default-")) {
+    // && credBoxId.includes("default-")
+    if (credBoxId !== undefined) {
 
-        console.log("qui");
         // Recupero dati credBox
         var credentialObject = JSON.parse(localStorage.getItem(credBoxId));
 
@@ -39,20 +79,22 @@ function showModalPopup(credBoxId) {
         document.getElementById("modal-description").value = credentialObject.description;
 
         // Rendo il credential Name delle password create in sola lettura
+        //if(credBoxId.includes("default-")){
         document.getElementById("modal-cred-name").readOnly = "true";
+        //}
 
         // Gestire save e remove buttons
-        document.getElementById("modal-save-button").onclick = function(){saveCred(credBoxId)};
-        document.getElementById("modal-remove-button").onclick = function(){deleteCred(credBoxId)};
+        document.getElementById("modal-save-button").onclick = function () { saveCred(credBoxId) };
+        document.getElementById("modal-remove-button").onclick = function () { deleteCred(credBoxId) };
 
     } else {
-        // console.log("qua");
+
         // Modal Popup per creare nuova credenziale
         document.getElementById("modal-cred-name").removeAttribute("readonly");
         document.getElementById("modal-heading").innerHTML = "ADD CREDENTIAL";
-        document.getElementById("modal-save-button").onclick = function(){saveCred()};
-        document.getElementById("modal-remove-button").onclick = function(){deleteCred()};
-    
+        document.getElementById("modal-save-button").onclick = function () { saveCred() };
+        document.getElementById("modal-remove-button").onclick = function () { deleteCred() };
+
     }
 
     document.getElementById('modal-popup').style.display = 'block';
@@ -96,46 +138,22 @@ function saveCred(credBoxId) {
 
     const modalDescription = document.getElementById("modal-description");
 
+    // Prendi i dati dal form del modal popup
     var credData = {};
     credData.credentialName = modalCredName.value;
     credData.email = modalEmail.value;
     credData.password = modalPassword.value;
     credData.description = modalDescription.value;
 
-
     if (credBoxId === undefined) {
 
         // Creazione di un random ID per la nuova credenziale
         credBoxId = self.crypto.randomUUID();
-        console.log(credBoxId);
-
-
-        
-
-
-
-
 
         // Aggiungi credenziale nella credBox
-        var template = document.getElementById('cred-box-template');
-        var clone = document.importNode(template.content, true);
-        clone.setAttribute("id", credBoxId);
-        document.getElementById("credBox").appendChild(clone);
-        // document.getElementById('cred-box-template').content.cloneNode(true);
-
-        // Aggiungo l'id alla nuova credBox
-        
-        console.log(cred);
-        // Aggiungi onclick
-        cred.addEventListener('click', showModalPopup(credBoxId));
-        // localStorage.setItem(credBoxId, )
-        cred.querySelector('h3').textContent = modalCredName.value;
-
-        // Aggiungi Credential Box
-        document.getElementById('credBox').appendChild(cred);
+        addCredToCredBox(credBoxId, modalCredName.value);
 
     }
-    
 
     // Salva dati credenziale in localstorage
     localStorage.setItem(credBoxId, JSON.stringify(credData));
@@ -156,14 +174,17 @@ function deleteCred(credBoxId) {
         document.getElementById("modal-password").value = "";
         document.getElementById("modal-description").value = "";
         localStorage.setItem("default-" + document.getElementById("modal-cred-name").value, "{\"credentialName\":\"" + document.getElementById("modal-cred-name").value + "\",\"email\":\"\",\"password\":\"\",\"description\":\"\"}");
+    
     } else {
         // Rimuovi dal documento
         document.getElementById(credBoxId).remove();
         // Rimuovi da Local Storage
         localStorage.removeItem(credBoxId);
+
+        closeModalPopup();
+
     }
-    
-    closeModalPopup();
+
 
 }
 
@@ -200,5 +221,5 @@ function hidePassword() {
     if (eye.classList.contains('bi-eye')) {
         eye.classList.remove('bi-eye');
     }
-    
+
 }
