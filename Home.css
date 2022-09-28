@@ -53,6 +53,16 @@ body {
     text-shadow: 2px 2px black;
 }
 
+.error {
+    color: red;
+    line-height: 1;
+    margin-top: 10px;
+    display: none;
+}
+
+.displayError {
+    display: block;
+}
 
 
 

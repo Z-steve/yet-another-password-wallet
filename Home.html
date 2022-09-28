@@ -167,29 +167,58 @@
                 </span>
                 <h4 id="modal-heading" class="w3-center"></h4>
             </header>
-            <div class="w3-padding">
-                <div class="w3-container w3-card w3-white-4">
-                    <div class="w3-section">
-                        <label>Credential Name</label>
-                        <input id="modal-cred-name" class="w3-input" type="text" required="Credential name is mandatory" maxlength="80">
+
+                <div class="w3-padding">
+                    <div class="w3-container w3-card w3-white-4">
+                        <!-- Credential Name -->
+                        <div class="w3-section">
+                            <label>Credential Name</label>
+                            <input id="modal-cred-name" class="w3-input" type="text"
+                                required="" maxlength="14">
+                            <div id="error-cred-name" class="error">
+                                <span>
+                                    <i class="bi bi-exclamation-circle"></i>
+                                    <p>Please, enter a credential name</p>
+                                </span>
+                            </div>    
+                        </div>
+                        <!-- Email -->
+                        <div class="w3-section">
+                            <label>Email or username</label>
+                            <input id="modal-email" class="w3-input" type="text" required=""
+                                maxlength="80">
+                            <div id="error-email-or-username" class="error">
+                                <span>
+                                    <i class="bi bi-exclamation-circle"></i>
+                                    <p>Please, enter a email address or a username</p>
+                                </span>
+                            </div>   
+                        </div>
+                        <!-- Password -->
+                        <div class="w3-section">
+                            <label>Password</label>
+                            <input id="modal-password" class="w3-input" type="password" required=""
+                                maxlength="80"><i class="bi bi-eye-slash" onclick="showPassword()"
+                                id="togglePassword"></i>
+                            <div id="error-password" class="error">
+                                <span>
+                                    <i class="bi bi-exclamation-circle"></i>
+                                    <p>Please, enter a password</p>
+                                </span>
+                            </div>   
+                        </div>
+                        <!-- Description -->
+                        <div class="w3-section">
+                            <label>Description</label>
+                            <textarea id="modal-description" class="w3-input" type="text" placeholder="Add notes"
+                                maxlength="300"></textarea>
+                        </div>
                     </div>
-                    <div class="w3-section">
-                        <label>Email</label>
-                        <input id="modal-email" class="w3-input" type="email" required="Email is mandatory" maxlength="80">
-                    </div>
-                    <div class="w3-section">
-                        <label>Password</label>
-                        <input id="modal-password" class="w3-input" type="password" required="Password is mandatory" maxlength="80"><i class="bi bi-eye-slash" onclick="showPassword()" id="togglePassword"></i>
-                    </div>
-                    <div class="w3-section">
-                        <label>Description</label>
-                        <textarea id="modal-description" class="w3-input" type="text" placeholder="Add notes" maxlength="300"></textarea>
-                    </div>
+                    <br>
+                    <button id="modal-save-button" class="w3-button w3-large w3-center">SAVE</button>
+                    <button id="modal-remove-button" class="w3-button w3-large w3-center">REMOVE</button>
                 </div>
-                <br>
-                <button id="modal-save-button" class="w3-button w3-large w3-center">SAVE</button>
-                <button id="modal-remove-button" class="w3-button w3-large w3-center">REMOVE</button>
-            </div>
+
         </div>
     </div>
 

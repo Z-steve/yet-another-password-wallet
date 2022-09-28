@@ -27,7 +27,7 @@ function fillDefaultCred() {
 
         localStorage.setItem("default-Facebook", "{\"credentialName\":\"Facebook\",\"email\":\"\",\"password\":\"\",\"description\":\"\"}");
         localStorage.setItem("default-Instagram", "{\"credentialName\":\"Instagram\",\"email\":\"\",\"password\":\"\",\"description\":\"\"}");
-        localStorage.setItem("default-Linkedin", "{\"credentialName\":\"LinkedIn\",\"email\":\"\",\"password\":\"\",\"description\":\"\"}");
+        localStorage.setItem("default-Linkedin", "{\"credentialName\":\"Linkedin\",\"email\":\"\",\"password\":\"\",\"description\":\"\"}");
         localStorage.setItem("default-Twitter", "{\"credentialName\":\"Twitter\",\"email\":\"\",\"password\":\"\",\"description\":\"\"}");
         localStorage.setItem("default-Gmail", "{\"credentialName\":\"Gmail\",\"email\":\"\",\"password\":\"\",\"description\":\"\"}");
         localStorage.setItem("default-Pinterest", "{\"credentialName\":\"Pinterest\",\"email\":\"\",\"password\":\"\",\"description\":\"\"}");
@@ -109,6 +109,9 @@ function closeModalPopup() {
     // Nascondi password se visibile
     hidePassword();
 
+    // Nascondi messaggi di errore validazione input
+    hideError();
+
     // Svuota campi modal popup
     document.getElementById("modal-cred-name").value = "";
     document.getElementById("modal-email").value = "";
@@ -120,54 +123,51 @@ function closeModalPopup() {
 // Funzione per aggiungere una credenziale
 function saveCred(credBoxId) {
 
-    // Controlla se ci sono tutti i campi required
+    // prendo i campi che mi serviranno per metterli nell'oggetto credData
     const modalCredName = document.getElementById("modal-cred-name");
-    if (!modalCredName.checkValidity()) {
-        return false;
-    }
-
     const modalEmail = document.getElementById("modal-email");
-    if (!modalEmail.checkValidity()) {
-        return false;
-    }
-
     const modalPassword = document.getElementById("modal-password");
-    if (!modalPassword.checkValidity()) {
-        return false;
-    }
-
     const modalDescription = document.getElementById("modal-description");
 
-    // Prendi i dati dal form del modal popup
-    var credData = {};
-    credData.credentialName = modalCredName.value;
-    credData.email = modalEmail.value;
-    credData.password = modalPassword.value;
-    credData.description = modalDescription.value;
+    // Controlla se ci sono tutti i campi required
+    if (validateUserInput(modalCredName, modalEmail, modalPassword)) {
 
-    if (credBoxId === undefined) {
+        // Compongo l'oggetto credData
+        var credData = {};
+        credData.credentialName = modalCredName.value;
+        credData.email = modalEmail.value;
+        credData.password = modalPassword.value;
+        credData.description = modalDescription.value;
 
-        // Creazione di un random ID per la nuova credenziale
-        credBoxId = self.crypto.randomUUID();
+        // Se si tratta di una nuova credenziale aggiunta dall'utente
+        if (credBoxId === undefined) {
 
-        // Aggiungi credenziale nella credBox
-        addCredToCredBox(credBoxId, modalCredName.value);
+            // Creazione di un random ID per la nuova credenziale
+            credBoxId = self.crypto.randomUUID();
+
+            // Aggiungi credenziale nella credBox
+            addCredToCredBox(credBoxId, modalCredName.value);
+        }
+
+        // Salva dati credenziale in localstorage
+        localStorage.setItem(credBoxId, JSON.stringify(credData));
+
+        // Chiudo il modal popup
+        closeModalPopup();
+
+        // Salvo tutto
+        return true;
+
+    } else {
+        // Non va avanti (non ti permette di salvare la credenziale)
+        return false;
 
     }
-
-    // Salva dati credenziale in localstorage
-    localStorage.setItem(credBoxId, JSON.stringify(credData));
-
-    closeModalPopup();
-
-    return true;
-
 }
 
 
 // Funzione per rimuovere una credenziale
 function deleteCred(credBoxId) {
-
     // fa il check se si tratta di una credenziale di default oppure no
     if (credBoxId.includes("default-")) {
         document.getElementById("modal-email").value = "";
@@ -182,10 +182,7 @@ function deleteCred(credBoxId) {
         localStorage.removeItem(credBoxId);
 
         closeModalPopup();
-
     }
-
-
 }
 
 
@@ -195,7 +192,56 @@ function deleteCred(credBoxId) {
 function exportCred() {
 }
 
-fillDefaultCred();
+
+
+// Funzione validazione input utente inserimento dati della credenziale
+function validateUserInput(modalCredName, modalEmail, modalPassword) {
+    
+    // Se c'è un errore tra questi, fai vedere di quale errore si tratta
+    if(!modalCredName.checkValidity() || !modalEmail.checkValidity() || !modalPassword.checkValidity()) {
+        if (!modalCredName.checkValidity()) {
+            console.log("enter a cred name");
+            document.getElementById("error-cred-name").classList.add("displayError");
+        } else {
+            document.getElementById("error-cred-name").classList.remove("displayError");
+        }
+    
+        if (!modalEmail.checkValidity()) {
+            console.log("enter a email or a username");
+            document.getElementById("error-email-or-username").classList.add("displayError");
+        } else {
+            document.getElementById("error-email-or-username").classList.remove("displayError");
+        }
+    
+        if (!modalPassword.checkValidity()) {
+            console.log("enter a password");
+            document.getElementById("error-password").classList.add("displayError");
+        } else {
+            document.getElementById("error-password").classList.remove("displayError");
+        }
+    } else {
+        // Qui se tutto è andato a buon fine, quindi l'input dell'utente è valido
+        return true;
+    }
+    
+
+
+    //if(!modalCredName.checkValidity() || !modalEmail.checkValidity() || !modalPassword.checkValidity()) {
+    //    console.log("there is an error");
+    //    if (modalCredName.checkValidity()) {}
+    //}
+
+    
+}
+
+
+
+function hideError() {
+    document.getElementById("error-cred-name").classList.remove("displayError");
+    document.getElementById("error-email-or-username").classList.remove("displayError");
+    document.getElementById("error-password").classList.remove("displayError");
+}
+
 
 
 
@@ -223,3 +269,12 @@ function hidePassword() {
     }
 
 }
+
+
+
+
+
+
+
+// esegui
+fillDefaultCred();
