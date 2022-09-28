@@ -6,11 +6,13 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "archiver": "^5.3.1",
+    "archiver-zip-encrypted": "^1.0.11",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
+    "jade": "^1.9.2",
     "morgan": "~1.9.1"
   },
   "description": "",
@@ -24,6 +26,5 @@
   "bugs": {
     "url": "https://github.com/fabriziofadigati/yet-another-password-wallet/issues"
   },
-  "homepage": "https://github.com/fabriziofadigati/yet-another-password-wallet#readme",
-  "devDependencies": {}
+  "homepage": "https://github.com/fabriziofadigati/yet-another-password-wallet#readme"
 }

@@ -284,6 +284,29 @@ function hidePassword() {
 
 // Funzione per esportare tutte le credenziali
 function exportCred() {
+
+    // Oggetto JSON con tutte le credenziali da esportare
+    var requestBodyJson = {};
+
+    // Cicla tutte le chiavi delle credenziali, tranne defaultFilled
+    for (var i = 0; i < localStorage.length; i++) {
+
+        // Ottieni chiave 
+        var key = localStorage.key(i);
+
+        // Se la chiave è diversa da defaultFilled
+        if (key !== "defaultFilled") {
+            requestBodyJson[key] = JSON.parse(localStorage.getItem(key));
+        }
+    
+    }
+
+    console.log(requestBodyJson);
+
+    // Chiamata AJAX
+
+
+
 }
 
 
