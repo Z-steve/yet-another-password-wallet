@@ -60,7 +60,7 @@ function fillDefaultCred() {
 }
 
 
-
+// Funzione per aprire il modal Popup
 function showModalPopup(credBoxId) {
 
 
@@ -101,6 +101,8 @@ function showModalPopup(credBoxId) {
 
 }
 
+
+// Funzione per chiudere il modal Popup
 function closeModalPopup() {
 
     // Nascondi modal popup
@@ -119,6 +121,7 @@ function closeModalPopup() {
     document.getElementById("modal-description").value = "";
 
 }
+
 
 // Funzione per aggiungere una credenziale
 function saveCred(credBoxId) {
@@ -186,35 +189,25 @@ function deleteCred(credBoxId) {
 }
 
 
-
-
-// Funzione per esportare tutte le credenziali
-function exportCred() {
-}
-
-
-
 // Funzione validazione input utente inserimento dati della credenziale
 function validateUserInput(modalCredName, modalEmail, modalPassword) {
     
     // Se c'è un errore tra questi, fai vedere di quale errore si tratta
     if(!modalCredName.checkValidity() || !modalEmail.checkValidity() || !modalPassword.checkValidity()) {
+        // Nome credenziale non inserita
         if (!modalCredName.checkValidity()) {
-            console.log("enter a cred name");
             document.getElementById("error-cred-name").classList.add("displayError");
         } else {
             document.getElementById("error-cred-name").classList.remove("displayError");
         }
-    
+        // Email o Username non inseriti
         if (!modalEmail.checkValidity()) {
-            console.log("enter a email or a username");
             document.getElementById("error-email-or-username").classList.add("displayError");
         } else {
             document.getElementById("error-email-or-username").classList.remove("displayError");
         }
-    
+        // Password non inserita
         if (!modalPassword.checkValidity()) {
-            console.log("enter a password");
             document.getElementById("error-password").classList.add("displayError");
         } else {
             document.getElementById("error-password").classList.remove("displayError");
@@ -235,14 +228,12 @@ function validateUserInput(modalCredName, modalEmail, modalPassword) {
 }
 
 
-
+// Funzione per nascondere i messaggi di errore (serve per la closeModalPopup function)
 function hideError() {
     document.getElementById("error-cred-name").classList.remove("displayError");
     document.getElementById("error-email-or-username").classList.remove("displayError");
     document.getElementById("error-password").classList.remove("displayError");
 }
-
-
 
 
 // funzione per far vedere la password in chiaro all'utente
@@ -256,6 +247,7 @@ function showPassword() {
     var eye = document.getElementById("togglePassword");
     eye.classList.toggle('bi-eye');
 }
+
 
 // funzione per nascondere la password quando viene chiuso modal-popup
 function hidePassword() {
@@ -271,7 +263,9 @@ function hidePassword() {
 }
 
 
-
+// Funzione per esportare tutte le credenziali
+function exportCred() {
+}
 
 
 
