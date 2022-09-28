@@ -189,6 +189,25 @@ function deleteCred(credBoxId) {
 }
 
 
+// Funzione per pulire i dati di una credenziale
+function clearCred(credBoxId) {
+    // Se credenziale di default non deve pulire anche il nome della credenziale stessa
+    if(credBoxId.includes("default-")) {
+        document.getElementById("modal-email").value = "";
+        document.getElementById("modal-password").value = "";
+        document.getElementById("modal-description").value = "";
+        localStorage.setItem("default-" + document.getElementById("modal-cred-name").value, "{\"credentialName\":\"" + document.getElementById("modal-cred-name").value + "\",\"email\":\"\",\"password\":\"\",\"description\":\"\"}");
+    // Se credenziale creata dall'utente deve pulire tutto (nome credenziale, email or username, password e description)
+    } else {
+        document.getElementById("modal-cred-name").value = "";
+        document.getElementById("modal-email").value = "";
+        document.getElementById("modal-password").value = "";
+        document.getElementById("modal-description").value = "";
+        localStorage.setItem("" + document.getElementById("modal-cred-name").value, "{\"credentialName\":\"" + document.getElementById("modal-cred-name").value + "\",\"email\":\"\",\"password\":\"\",\"description\":\"\"}");
+    }
+}
+
+
 // Funzione validazione input utente inserimento dati della credenziale
 function validateUserInput(modalCredName, modalEmail, modalPassword) {
     
@@ -270,5 +289,5 @@ function exportCred() {
 
 
 
-// esegui
+// Esegui sempre all'inizio
 fillDefaultCred();

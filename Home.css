@@ -34,14 +34,14 @@ body {
 }
 
 .footerPart {
-    background: url("images/background.jpg");
+    background: url("images/background4.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     height: 100px;
 }
 
 .headerPart {
-    background: url("images/background.jpg");
+    background: url("images/background4.jpg");
     min-height: 700px;
     background-size: cover;
     background-repeat: no-repeat;
