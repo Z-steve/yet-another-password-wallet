@@ -33,15 +33,8 @@ body {
     cursor: pointer;
 }
 
-.footerPart {
-    background: url("images/background4.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 100px;
-}
-
 .headerPart {
-    background: url("images/background4.jpg");
+    background-image: linear-gradient( rgb(0 1 1 / 84%), rgb(0 0 0 / 0%) ), url(images/background4.jpg);
     min-height: 700px;
     background-size: cover;
     background-repeat: no-repeat;
@@ -64,6 +57,14 @@ body {
     display: block;
 }
 
+.footerPart {
+    background-image: linear-gradient( rgb(0 1 1 / 26%), rgb(0 0 0) ), url(images/background4.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    height: 100px;
+}
+
 
 
 /* MEDIA QUERIES */
@@ -73,6 +74,12 @@ body {
     #credBox {
         padding-left: 50px;
         padding-right: 50px;
+    }
+    .headerTitle {
+        font-size: 40px !important;
+    }
+    .headerPart {
+        background-position: 57% center;
     }
 }
 
