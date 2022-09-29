@@ -15,7 +15,6 @@ function addCredToCredBox(credBoxId, credName) {
     clone.querySelector('h3').textContent = credName;
 
     // Aggiungi la nuova credenziale nel cred box prima di add button ed export button
-    // document.getElementById("credBox").appendChild(clone);
     const addButton = document.getElementById("add-cred-box");
     addButton.parentNode.insertBefore(clone, addButton);
 
