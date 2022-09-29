@@ -1,25 +1,30 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const fs = require('fs');
 const archiver = require('archiver');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(bodyParser.text({type:"*/json"}));
+app.use(express.static(__dirname));
+
+
 app.get('/', (req, res) => {
-  res.sendFile("home.html");
+  res.sendFile(__dirname + "/Home.html");
 });
 
 app.post('/export', (req, res) => {
 
-  // Leggere request 
-
-  // Creare file json
-  fs.appendFile('credentials.json', JSON.stringify(req.body), function (err) {
+  // Creare file json con il contenuto del request body
+  // req.body è una stringa in quanto è stato impostato il body parser
+  fs.writeFile('credentials.json', req.body, function (err) {
     if (err) throw err;
-    console.log('Saved!');
+    console.log('Saved credentials.json');
   });
 
-  // Cifrare il file json oppure metterlo in uno zip cifrato
+  // Inserire credentials.json in uno zip cifrato
+  // Generare password random per lo zip
 
   // register format for archiver
   // note: only do it once per Node.js process/application, as duplicate registration will throw an error
@@ -31,8 +36,15 @@ app.post('/export', (req, res) => {
   archive.append(fs.createReadStream('credentials.json'), { name: 'credentials.zip' })
   // ... add contents to archive as usual using archiver
 
-  // Restituisce il file delle credenziali al chiamante
-  res.download(file, "filename");
+  // Restituisce lo zip cifrato con il file credentials.json al chiamante
+  res.download(__dirname + "/credentials.zip", 'credentials.zip', function (err) {
+    if (err) {
+      console.log(err);
+
+    } else {
+      console.log("Ok");
+    }
+  });
 
 });
 
