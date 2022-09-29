@@ -76,7 +76,7 @@ function showModalPopup(credBoxId) {
         // Gestire save e clear buttons
         document.getElementById("modal-save-button").onclick = function () { saveCred(credBoxId) };
         document.getElementById("modal-clear-button").onclick = function () { clearCred(credBoxId) };
-    } 
+    }
     // controllo se NON è undefined (quindi una già creata dall'utente in precedenza)
     else if (credBoxId !== undefined) {
         document.getElementById("modal-heading").innerHTML = "EDIT CREDENTIAL";
@@ -94,8 +94,8 @@ function showModalPopup(credBoxId) {
         document.getElementById("modal-save-button").onclick = function () { saveCred(credBoxId) };
         document.getElementById("modal-clear-button").onclick = function () { clearCred(credBoxId) };
         document.getElementById("modal-remove-button").onclick = function () { deleteCred(credBoxId) };
-        
-    // qui nel caso in cui sto creando una nuova credenziale
+
+        // qui nel caso in cui sto creando una nuova credenziale
     } else {
         // Modal Popup per creare nuova credenziale
         document.getElementById("modal-cred-name").removeAttribute("readonly");
@@ -211,9 +211,9 @@ function clearCred(credBoxId) {
 
 // Funzione validazione input utente inserimento dati della credenziale
 function validateUserInput(modalCredName, modalEmail, modalPassword) {
-    
+
     // Se c'è un errore tra questi, fai vedere di quale errore si tratta
-    if(!modalCredName.checkValidity() || !modalEmail.checkValidity() || !modalPassword.checkValidity()) {
+    if (!modalCredName.checkValidity() || !modalEmail.checkValidity() || !modalPassword.checkValidity()) {
         // Nome credenziale non inserita
         if (!modalCredName.checkValidity()) {
             document.getElementById("error-cred-name").classList.add("displayError");
@@ -236,7 +236,7 @@ function validateUserInput(modalCredName, modalEmail, modalPassword) {
         // Qui se tutto è andato a buon fine, quindi l'input dell'utente è valido
         return true;
     }
-    
+
 }
 
 
@@ -276,13 +276,13 @@ function hidePassword() {
 
 
 function fillModalPopup(credBoxId) {
-        // Recupero dati credBox
-        var credentialObject = JSON.parse(localStorage.getItem(credBoxId));
-        // Fill campi del modal popup
-        document.getElementById("modal-cred-name").value = credentialObject.credentialName;
-        document.getElementById("modal-email").value = credentialObject.email;
-        document.getElementById("modal-password").value = credentialObject.password;
-        document.getElementById("modal-description").value = credentialObject.description;
+    // Recupero dati credBox
+    var credentialObject = JSON.parse(localStorage.getItem(credBoxId));
+    // Fill campi del modal popup
+    document.getElementById("modal-cred-name").value = credentialObject.credentialName;
+    document.getElementById("modal-email").value = credentialObject.email;
+    document.getElementById("modal-password").value = credentialObject.password;
+    document.getElementById("modal-description").value = credentialObject.description;
 }
 
 
@@ -302,17 +302,49 @@ function exportCred() {
         if (key !== "defaultFilled") {
             requestBodyJson[key] = JSON.parse(localStorage.getItem(key));
         }
-    
+
     }
 
     console.log(requestBodyJson);
 
     // Chiamata AJAX
+    /*
+    var request = new XMLHttpRequest();
+    request.open("POST", "/export", true);
+
+    request.setRequestHeader("Content-Type", "application/json");
+
+    request.onload = function(){
+
+        // Qui apri popup che restituisce la password da usare per aprire lo zip
+
+        console.log("zip scaricato!");
+    }
+
+    request.send(requestBodyJson);
+
+    */
+
+    fetch(`/export`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBodyJson),
+    })
+    .then(response => response.blob())
+    .then(function (blob) {
+        console.log('blob received');
+        var url = window.URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = "credentials.zip";
+        document.body.appendChild(a); 
+        a.click();
+        a.remove();  
+    })
 
 }
-
-
-
 
 // Esegui sempre all'inizio
 fillDefaultCred();
