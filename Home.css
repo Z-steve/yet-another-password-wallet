@@ -57,6 +57,18 @@ body {
     display: block;
 }
 
+.clearButton {
+    display: inline;
+}
+
+.removeButton {
+    display: inline;
+}
+
+.hideRemoveButton {
+    display: none;
+}
+
 .footerPart {
     background-image: linear-gradient( rgb(0 1 1 / 26%), rgb(0 0 0) ), url(images/background4.jpg);
     background-size: cover;

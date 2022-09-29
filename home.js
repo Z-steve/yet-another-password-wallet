@@ -14,8 +14,10 @@ function addCredToCredBox(credBoxId, credName) {
     // Aggiungi cred name nel titolo della credenziale
     clone.querySelector('h3').textContent = credName;
 
-    // Aggiungi la nuova credenziale nel cred box
-    document.getElementById("credBox").appendChild(clone);
+    // Aggiungi la nuova credenziale nel cred box prima di add button ed export button
+    // document.getElementById("credBox").appendChild(clone);
+    const addButton = document.getElementById("add-cred-box");
+    addButton.parentNode.insertBefore(clone, addButton);
 
 }
 
@@ -63,38 +65,46 @@ function fillDefaultCred() {
 // Funzione per aprire il modal Popup
 function showModalPopup(credBoxId) {
 
-
-    // Se gli passo l'id e la credbox è una default allora ...
-    // && credBoxId.includes("default-")
-    if (credBoxId !== undefined) {
-
-        // Recupero dati credBox
-        var credentialObject = JSON.parse(localStorage.getItem(credBoxId));
-
-        // Fill campi del modal popup
+    // controllo se si tratta di una credenziale di default 
+    if (credBoxId !== undefined && credBoxId.includes("default-")) {
         document.getElementById("modal-heading").innerHTML = "EDIT CREDENTIAL";
-        document.getElementById("modal-cred-name").value = credentialObject.credentialName;
-        document.getElementById("modal-email").value = credentialObject.email;
-        document.getElementById("modal-password").value = credentialObject.password;
-        document.getElementById("modal-description").value = credentialObject.description;
+        // riempie il modal popup con i dati (in base al credBoxId)
+        fillModalPopup(credBoxId);
 
         // Rendo il credential Name delle password create in sola lettura
-        //if(credBoxId.includes("default-")){
         document.getElementById("modal-cred-name").readOnly = "true";
-        //}
 
-        // Gestire save e remove buttons
+        // Gestire save e clear buttons
         document.getElementById("modal-save-button").onclick = function () { saveCred(credBoxId) };
+        document.getElementById("modal-clear-button").onclick = function () { clearCred(credBoxId) };
+    } 
+    // controllo se NON è undefined (quindi una già creata dall'utente in precedenza)
+    else if (credBoxId !== undefined) {
+        document.getElementById("modal-heading").innerHTML = "EDIT CREDENTIAL";
+        // riempie il modal popup con i dati (in base al credBoxId)
+        fillModalPopup(credBoxId);
+
+        // Rendo il credential Name delle password create in sola lettura
+        document.getElementById("modal-cred-name").readOnly = "true";
+
+        // show remove button
+        document.getElementById("modal-remove-button").classList.remove("hideRemoveButton");
+        document.getElementById("modal-remove-button").classList.add("removeButton");
+
+        // Gestire save, clear e remove buttons
+        document.getElementById("modal-save-button").onclick = function () { saveCred(credBoxId) };
+        document.getElementById("modal-clear-button").onclick = function () { clearCred(credBoxId) };
         document.getElementById("modal-remove-button").onclick = function () { deleteCred(credBoxId) };
-
+        
+    // qui nel caso in cui sto creando una nuova credenziale
     } else {
-
         // Modal Popup per creare nuova credenziale
         document.getElementById("modal-cred-name").removeAttribute("readonly");
         document.getElementById("modal-heading").innerHTML = "ADD CREDENTIAL";
-        document.getElementById("modal-save-button").onclick = function () { saveCred() };
-        document.getElementById("modal-remove-button").onclick = function () { deleteCred() };
 
+        // Gestire save e clear buttons
+        document.getElementById("modal-save-button").onclick = function () { saveCred() };
+        document.getElementById("modal-clear-button").onclick = function () { clearCred() };
     }
 
     document.getElementById('modal-popup').style.display = 'block';
@@ -113,6 +123,10 @@ function closeModalPopup() {
 
     // Nascondi messaggi di errore validazione input
     hideError();
+
+    // Nascondi remove button
+    document.getElementById("modal-remove-button").classList.add("hideRemoveButton");
+    document.getElementById("modal-remove-button").classList.remove("removeButton");
 
     // Svuota campi modal popup
     document.getElementById("modal-cred-name").value = "";
@@ -171,39 +185,27 @@ function saveCred(credBoxId) {
 
 // Funzione per rimuovere una credenziale
 function deleteCred(credBoxId) {
-    // fa il check se si tratta di una credenziale di default oppure no
-    if (credBoxId.includes("default-")) {
-        document.getElementById("modal-email").value = "";
-        document.getElementById("modal-password").value = "";
-        document.getElementById("modal-description").value = "";
-        localStorage.setItem("default-" + document.getElementById("modal-cred-name").value, "{\"credentialName\":\"" + document.getElementById("modal-cred-name").value + "\",\"email\":\"\",\"password\":\"\",\"description\":\"\"}");
-    
-    } else {
-        // Rimuovi dal documento
-        document.getElementById(credBoxId).remove();
-        // Rimuovi da Local Storage
-        localStorage.removeItem(credBoxId);
+    // Rimuovi dal documento
+    document.getElementById(credBoxId).remove();
+    // Rimuovi da Local Storage
+    localStorage.removeItem(credBoxId);
+    // Chiudi il modal Popup
+    closeModalPopup();
 
-        closeModalPopup();
-    }
 }
 
 
 // Funzione per pulire i dati di una credenziale
 function clearCred(credBoxId) {
-    // Se credenziale di default non deve pulire anche il nome della credenziale stessa
-    if(credBoxId.includes("default-")) {
-        document.getElementById("modal-email").value = "";
-        document.getElementById("modal-password").value = "";
-        document.getElementById("modal-description").value = "";
-        localStorage.setItem("default-" + document.getElementById("modal-cred-name").value, "{\"credentialName\":\"" + document.getElementById("modal-cred-name").value + "\",\"email\":\"\",\"password\":\"\",\"description\":\"\"}");
-    // Se credenziale creata dall'utente deve pulire tutto (nome credenziale, email or username, password e description)
-    } else {
+    if (credBoxId === undefined) {
         document.getElementById("modal-cred-name").value = "";
         document.getElementById("modal-email").value = "";
         document.getElementById("modal-password").value = "";
         document.getElementById("modal-description").value = "";
-        localStorage.setItem("" + document.getElementById("modal-cred-name").value, "{\"credentialName\":\"" + document.getElementById("modal-cred-name").value + "\",\"email\":\"\",\"password\":\"\",\"description\":\"\"}");
+    } else {
+        document.getElementById("modal-email").value = "";
+        document.getElementById("modal-password").value = "";
+        document.getElementById("modal-description").value = "";
     }
 }
 
@@ -235,14 +237,6 @@ function validateUserInput(modalCredName, modalEmail, modalPassword) {
         // Qui se tutto è andato a buon fine, quindi l'input dell'utente è valido
         return true;
     }
-    
-
-
-    //if(!modalCredName.checkValidity() || !modalEmail.checkValidity() || !modalPassword.checkValidity()) {
-    //    console.log("there is an error");
-    //    if (modalCredName.checkValidity()) {}
-    //}
-
     
 }
 
@@ -282,6 +276,17 @@ function hidePassword() {
 }
 
 
+function fillModalPopup(credBoxId) {
+        // Recupero dati credBox
+        var credentialObject = JSON.parse(localStorage.getItem(credBoxId));
+        // Fill campi del modal popup
+        document.getElementById("modal-cred-name").value = credentialObject.credentialName;
+        document.getElementById("modal-email").value = credentialObject.email;
+        document.getElementById("modal-password").value = credentialObject.password;
+        document.getElementById("modal-description").value = credentialObject.description;
+}
+
+
 // Funzione per esportare tutte le credenziali
 function exportCred() {
 
@@ -304,8 +309,6 @@ function exportCred() {
     console.log(requestBodyJson);
 
     // Chiamata AJAX
-
-
 
 }
 
