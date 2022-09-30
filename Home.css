@@ -34,7 +34,7 @@ body {
 }
 
 .headerPart {
-    background-image: linear-gradient( rgb(0 1 1 / 84%), rgb(0 0 0 / 0%) ), url(images/background4.jpg);
+    background-image: linear-gradient( rgb(0 1 1 / 84%), rgb(0 0 0 / 0%) ), url(images/background.jpg);
     min-height: 700px;
     background-size: cover;
     background-repeat: no-repeat;
