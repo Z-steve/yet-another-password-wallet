@@ -70,7 +70,7 @@ body {
 }
 
 .footerPart {
-    background-image: linear-gradient( rgb(0 1 1 / 26%), rgb(0 0 0) ), url(images/background4.jpg);
+    background-image: linear-gradient( rgb(0 1 1 / 26%), rgb(0 0 0) ), url(images/background.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: bottom;
