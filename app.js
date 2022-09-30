@@ -29,6 +29,11 @@ app.post('/export', (req, res) => {
     console.log('Saved credentials.json');
   });
 
+  fs.writeFileSync('credentials.zip', '', function (err) {
+    if (err) throw err;
+    console.log('Saved credentials.zip');
+  });
+
   const output = fs.createWriteStream(__dirname + '/credentials.zip');
 
   // Inserire credentials.json in uno zip cifrato
@@ -52,6 +57,9 @@ app.post('/export', (req, res) => {
       console.log("Ok");
     }
   });
+
+  // Rimuovere credentials.json e credentials.zip dal filesystem 
+
 
 });
 

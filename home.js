@@ -1,3 +1,4 @@
+
 // Crea elemento div cred box secondo template
 function addCredToCredBox(credBoxId, credName) {
 
@@ -287,7 +288,7 @@ function fillModalPopup(credBoxId) {
 
 
 // Funzione per esportare tutte le credenziali
-function exportCred() {
+async function exportCred() {
 
     // Oggetto JSON con tutte le credenziali da esportare
     var requestBodyJson = {};
@@ -325,20 +326,25 @@ function exportCred() {
 
     */
 
-
     fetch('/export', {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
-            "Content-Disposition": "attachment; filename=credentials.zip",
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(requestBodyJson),
     })
-    .then(response => response.blob())
+    .then(async function(response) { await response.blob() })
     .then(function (blob) {
+
         console.log('blob received');
-        var file = window.URL.createObjectURL(blob)
-        window.location.assign(file);
+
+        console.log(blob);
+
+        // Trigger download dello zip
+        download(blob, "credentials.zip", "application/zip");
+
+        //var file = window.URL.createObjectURL(blob)
+        //window.location.assign(file);
         //var url = window.URL.createObjectURL(blob);
         //var a = document.createElement('a');
         //a.href = url;
@@ -346,41 +352,31 @@ function exportCred() {
         //document.body.appendChild(a); 
         //a.click();
         //a.remove();  
-    })
+    });
 
+    /*
+    .then(response => await response.blob())
+    .then(function (blob) {
+
+        console.log('blob received');
+
+        console.log(blob);
+
+        // Trigger download dello zip
+        download(blob, "credentials.zip", "application/zip");
+
+        //var file = window.URL.createObjectURL(blob)
+        //window.location.assign(file);
+        //var url = window.URL.createObjectURL(blob);
+        //var a = document.createElement('a');
+        //a.href = url;
+        //a.download = "credentials.zip";
+        //document.body.appendChild(a); 
+        //a.click();
+        //a.remove();  
+    });
+    */
 }
-
-
-function fetchDown (url, saveas) {
-    // (A) FETCH FILE
-    fetch(url)
-   
-    // (B) RETURN AS BLOB
-    .then((result) => {
-      if (result.status != 200) { throw new Error("Bad server response"); }
-      return result.blob();
-    })
-   
-    // (C) BLOB DATA
-    .then((data) => {
-      // (C1) FILE DATA IS "READY FOR USE"
-      console.log(data);
-   
-      // (C2) TO "FORCE DOWNLOAD"
-      var url = window.URL.createObjectURL(data),
-      anchor = document.createElement("a");
-      anchor.href = url;
-      anchor.download = saveas;
-      anchor.click();
-   
-      // (C3) CLEAN UP
-      window.URL.revokeObjectURL(url);
-      document.removeChild(anchor);
-    })
-   
-    // (D) HANDLE ERRORS - OPTIONAL
-    .catch((error) => { console.log(error); });
-  }
 
 // Esegui sempre all'inizio
 fillDefaultCred();
