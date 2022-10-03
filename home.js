@@ -288,7 +288,7 @@ function fillModalPopup(credBoxId) {
 
 
 // Funzione per esportare tutte le credenziali
-async function exportCred() {
+function exportCred() {
 
     // Oggetto JSON con tutte le credenziali da esportare
     var requestBodyJson = {};
@@ -333,7 +333,7 @@ async function exportCred() {
         },
         body: JSON.stringify(requestBodyJson),
     })
-    .then(async function(response) { await response.blob() })
+    .then(function(response) { return response.blob() })
     .then(function (blob) {
 
         console.log('blob received');
@@ -341,17 +341,17 @@ async function exportCred() {
         console.log(blob);
 
         // Trigger download dello zip
-        download(blob, "credentials.zip", "application/zip");
+        //download(blob, "credentials.zip", "application/zip");
+        var a = document.createElement("a");
 
-        //var file = window.URL.createObjectURL(blob)
-        //window.location.assign(file);
-        //var url = window.URL.createObjectURL(blob);
-        //var a = document.createElement('a');
-        //a.href = url;
-        //a.download = "credentials.zip";
-        //document.body.appendChild(a); 
-        //a.click();
-        //a.remove();  
+        a.href = window.URL.createObjectURL(blob);
+
+        a.download = "credentials";
+
+        a.click();
+
+        a.remove();
+  
     });
 
     /*

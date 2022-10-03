@@ -26,7 +26,6 @@ app.post('/export', (req, res) => {
   // req.body è una stringa in quanto è stato impostato il body parser
   fs.writeFileSync('credentials.json', req.body, function (err) {
     if (err) throw err;
-    console.log('Saved credentials.json');
   });
 
   fs.writeFileSync('credentials.zip', '', function (err) {
@@ -42,9 +41,13 @@ app.post('/export', (req, res) => {
   // create archive and specify method of encryption and password
   let archive = archiver.create('zip-encrypted', { zlib: { level: 8 }, encryptionMethod: 'aes256', password: '123' });
 
-  archive.pipe(output);
+  //archive.pipe(output);
 
-  archive.file(__dirname + '/credentials.json', { name: 'credentials.json' });
+  archive.append(fs.createReadStream(__dirname + '/credentials.json'), { name: 'credentials.json' });
+
+  res.attachment('credentials.zip');
+
+  archive.pipe(res);
 
   archive.finalize();
 
@@ -58,6 +61,16 @@ app.post('/export', (req, res) => {
     }
   });
 
+  /*
+  res.download(__dirname + "/credentials.json", 'credentials.json', function (err) {
+    if (err) {
+      console.log(err);
+
+    } else {
+      console.log("Ok");
+    }
+  });
+  */
   // Rimuovere credentials.json e credentials.zip dal filesystem 
 
 
