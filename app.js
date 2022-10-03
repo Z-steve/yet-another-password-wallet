@@ -2,13 +2,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const archiver = require('archiver');
-// const downloadjs = require("downloadjs");
-// const download = require("download");
+const generator = require('generate-password');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(bodyParser.text({type:"*/json"}));
+app.use(bodyParser.text({ type: "*/json" }));
 app.use(express.static(__dirname));
 
 // Usa plugin zip-encrypted
@@ -22,57 +21,41 @@ app.get('/', (req, res) => {
 
 app.post('/export', (req, res) => {
 
-  // Creare file json con il contenuto del request body
-  // req.body è una stringa in quanto è stato impostato il body parser
-  fs.writeFileSync('credentials.json', req.body, function (err) {
-    if (err) throw err;
+  // Genera password random per l'archivio zip
+  const password = generator.generate({ length: 10, numbers: true });
+
+  console.log(password);
+
+  // Crea archivio zip cifrato
+  let archive = archiver.create('zip-encrypted', { zlib: { level: 8 }, encryptionMethod: 'aes256', password: password });
+
+  // Catch warnings
+  archive.on('warning', function (err) {
+    if (err.code === 'ENOENT') {
+      console.log(err);
+    } else {
+      throw err;
+    }
   });
 
-  fs.writeFileSync('credentials.zip', '', function (err) {
-    if (err) throw err;
-    console.log('Saved credentials.zip');
+  // Catch errors
+  archive.on('error', function (err) {
+    throw err;
   });
 
-  const output = fs.createWriteStream(__dirname + '/credentials.zip');
+  // Append file credentials.json con le credenziali
+  archive.append(req.body, { name: 'credentials.json' });
 
-  // Inserire credentials.json in uno zip cifrato
-  // Generare password random per lo zip
-
-  // create archive and specify method of encryption and password
-  let archive = archiver.create('zip-encrypted', { zlib: { level: 8 }, encryptionMethod: 'aes256', password: '123' });
-
-  //archive.pipe(output);
-
-  archive.append(fs.createReadStream(__dirname + '/credentials.json'), { name: 'credentials.json' });
-
+  // Aggiungi header Content-Disposition nella risposta
   res.attachment('credentials.zip');
 
+  // Aggiungi header con password dell'archivio nella risposta
+  res.setHeader("archive-password", password);
+
+  // Imposta stream di scrittura dell'archivio
   archive.pipe(res);
 
   archive.finalize();
-
-  // Restituisce lo zip cifrato con il file credentials.json al chiamante
-  res.download(__dirname + "/credentials.zip", 'credentials.zip', function (err) {
-    if (err) {
-      console.log(err);
-
-    } else {
-      console.log("Ok");
-    }
-  });
-
-  /*
-  res.download(__dirname + "/credentials.json", 'credentials.json', function (err) {
-    if (err) {
-      console.log(err);
-
-    } else {
-      console.log("Ok");
-    }
-  });
-  */
-  // Rimuovere credentials.json e credentials.zip dal filesystem 
-
 
 });
 
