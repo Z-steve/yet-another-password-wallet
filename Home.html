@@ -159,7 +159,7 @@
         <p>Developed by Zsteve an​d Fabrizio</p>
     </footer>
 
-    <!-- Modal Popup Template -->
+    <!-- Modal Popup Credentials Template -->
     <div id="modal-popup" class="w3-modal w3-center" style="display: none;">
         <div class="w3-modal-content w3-card w3-white-4 w3-animate-top">
             <header class="w3-container">
@@ -221,6 +221,30 @@
                     <button id="modal-remove-button" class="w3-button w3-large w3-center hideRemoveButton">REMOVE</button>
                 </div>
 
+        </div>
+    </div>
+
+
+    <!-- Modal Popup Password Template -->
+    <div id="modal-popup-password" class="w3-modal w3-center" style="display: none;">
+        <div class="w3-modal-content w3-card w3-white-4 w3-animate-top">
+            <header class="w3-container">
+                <span onclick="closePasswordModalPopup()" class="w3-button w3-medium w3-display-topright">
+                    <i class="fa fa-close"></i>
+                </span>
+                <h4 id="modal-heading" class="w3-center">This is the password to unlock the zip file!</h4>
+            </header>
+            <div class="w3-padding">
+                <div class="w3-container w3-card w3-white-4">
+                    <!-- Password generated for zip file -->
+                    <div class="w3-section">
+                        <label id="password-generated" class="w3-center">TEST</label>
+                        <i onclick="copyPassword('password-generated')" class="bi bi-clipboard" style="padding-left: 20px; cursor: pointer;"></i>
+                    </div>
+                </div>
+                <br>
+                <button onclick="closePasswordModalPopup()" class="w3-button w3-large w3-center">OK</button>
+            </div>
         </div>
     </div>
 

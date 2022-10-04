@@ -21,6 +21,8 @@ function addCredToCredBox(credBoxId, credName) {
 
 }
 
+
+
 // Viene chiamata ad ogni accesso alla pagina per la persistenza dei dati 
 function fillDefaultCred() {
 
@@ -112,7 +114,17 @@ function showModalPopup(credBoxId) {
 }
 
 
-// Funzione per chiudere il modal Popup
+
+function showPasswordModalPopup(password) {
+
+    document.getElementById("modal-popup-password").style.display = "block";
+
+    // Display password generata per file zip
+    document.getElementById("password-generated").style.textContent = "";
+}
+
+
+// Funzione per chiudere il modal Popup delle credenziali
 function closeModalPopup() {
 
     // Nascondi modal popup
@@ -134,6 +146,15 @@ function closeModalPopup() {
     document.getElementById("modal-password").value = "";
     document.getElementById("modal-description").value = "";
 
+}
+
+
+// Funzione per chiudere il modal popup della password generata per il file zip
+function closePasswordModalPopup() {
+
+    // Nascondi modal Popup
+    document.getElementById("modal-popup-password").style.display = "none";
+    
 }
 
 
@@ -249,7 +270,7 @@ function hideError() {
 }
 
 
-// funzione per far vedere la password in chiaro all'utente
+// Funzione per far vedere la password in chiaro all'utente
 function showPassword() {
     var passwd = document.getElementById("modal-password");
     if (passwd.type === "password") {
@@ -259,6 +280,20 @@ function showPassword() {
     }
     var eye = document.getElementById("togglePassword");
     eye.classList.toggle('bi-eye');
+}
+
+
+// Funzione per copiare la password nella clipboard
+function copyPassword(id) {
+
+    // Get the text field
+    var copyText = document.getElementById(id);
+
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(copyText.textContent);
+
+    // Alert the copied text
+    alert("Copied the text: " + copyText.textContent);
 }
 
 
@@ -306,25 +341,9 @@ function exportCred() {
 
     }
 
-    console.log(requestBodyJson);
+    // console.log(requestBodyJson);
 
     // Chiamata AJAX
-    /*
-    var request = new XMLHttpRequest();
-    request.open("POST", "/export", true);
-
-    request.setRequestHeader("Content-Type", "application/json");
-
-    request.onload = function(){
-
-        // Qui apri popup che restituisce la password da usare per aprire lo zip
-
-        console.log("zip scaricato!");
-    }
-
-    request.send(requestBodyJson);
-
-    */
 
     fetch('/export', {
         method: "POST",
@@ -336,9 +355,9 @@ function exportCred() {
     .then(function(response) { return response.blob() })
     .then(function (blob) {
 
-        console.log('blob received');
+        // console.log('blob received');
 
-        console.log(blob);
+        // console.log(blob);
 
         // Trigger download dello zip
         //download(blob, "credentials.zip", "application/zip");
@@ -352,30 +371,14 @@ function exportCred() {
 
         a.remove();
   
+    })
+    .then(function() {
+        // leggere header e printare modalpopup con password generata
+
+        showPasswordModalPopup();
     });
+    
 
-    /*
-    .then(response => await response.blob())
-    .then(function (blob) {
-
-        console.log('blob received');
-
-        console.log(blob);
-
-        // Trigger download dello zip
-        download(blob, "credentials.zip", "application/zip");
-
-        //var file = window.URL.createObjectURL(blob)
-        //window.location.assign(file);
-        //var url = window.URL.createObjectURL(blob);
-        //var a = document.createElement('a');
-        //a.href = url;
-        //a.download = "credentials.zip";
-        //document.body.appendChild(a); 
-        //a.click();
-        //a.remove();  
-    });
-    */
 }
 
 // Esegui sempre all'inizio
