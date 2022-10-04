@@ -120,7 +120,7 @@ function showPasswordModalPopup(password) {
     document.getElementById("modal-popup-password").style.display = "block";
 
     // Display password generata per file zip
-    document.getElementById("password-generated").style.textContent = "";
+    document.getElementById("password-generated").textContent = password;
 }
 
 
@@ -154,7 +154,9 @@ function closePasswordModalPopup() {
 
     // Nascondi modal Popup
     document.getElementById("modal-popup-password").style.display = "none";
-    
+
+    document.getElementById("password-generated").textContent = "";
+
 }
 
 
@@ -292,8 +294,6 @@ function copyPassword(id) {
     // Copy the text inside the text field
     navigator.clipboard.writeText(copyText.textContent);
 
-    // Alert the copied text
-    alert("Copied the text: " + copyText.textContent);
 }
 
 
@@ -327,6 +327,7 @@ function exportCred() {
 
     // Oggetto JSON con tutte le credenziali da esportare
     var requestBodyJson = {};
+    var password;
 
     // Cicla tutte le chiavi delle credenziali, tranne defaultFilled
     for (var i = 0; i < localStorage.length; i++) {
@@ -352,7 +353,10 @@ function exportCred() {
         },
         body: JSON.stringify(requestBodyJson),
     })
-    .then(function(response) { return response.blob() })
+    .then(function(response) { 
+        password = response.headers.get('archive-password'); 
+        return response.blob(); 
+    })
     .then(function (blob) {
 
         // console.log('blob received');
@@ -372,10 +376,9 @@ function exportCred() {
         a.remove();
   
     })
-    .then(function() {
+    .then(function(response) {
         // leggere header e printare modalpopup con password generata
-
-        showPasswordModalPopup();
+        showPasswordModalPopup(password);
     });
     
 
