@@ -188,6 +188,7 @@
                             <label>Email or username</label>
                             <input id="modal-email" class="w3-input" type="text" required=""
                                 maxlength="80">
+                            <i onclick="copyText('modal-email')" class="bi bi-clipboard w3-tooltip w3-center" style="margin-top: 5px; cursor: pointer; display: block;"><span id="copySpan" class="w3-text">copy</span></i>
                             <div id="error-email-or-username" class="error">
                                 <span>
                                     <i class="bi bi-exclamation-circle"></i>
@@ -239,7 +240,7 @@
                     <!-- Password generated for zip file -->
                     <div class="w3-section">
                         <label id="password-generated" class="w3-center"></label>
-                        <i onclick="copyPassword('password-generated')" class="bi bi-clipboard" style="padding-left: 20px; cursor: pointer;"></i>
+                        <i onclick="copyText('password-generated')" class="bi bi-clipboard w3-tooltip w3-center" style="margin-top: 10px; cursor: pointer; display: block;"><span id="copySpan" class="w3-text">copy</span></i>
                     </div>
                 </div>
                 <br>

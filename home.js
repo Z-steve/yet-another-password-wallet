@@ -286,11 +286,18 @@ function showPassword() {
 
 
 // Funzione per copiare la password nella clipboard
-function copyPassword(id) {
+function copyText(id) {
 
     // Get the text field
     var copyText = document.getElementById(id);
 
+    // Cambia testo tooltip quando premuto
+    document.getElementById("copySpan").textContent = "copied";
+    setTimeout(function() {
+        document.getElementById("copySpan").textContent = "copy";
+    }, 3000);
+    
+    
     // Copy the text inside the text field
     navigator.clipboard.writeText(copyText.textContent);
 
