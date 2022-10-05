@@ -295,8 +295,7 @@ function copyText(id) {
     document.getElementById("copySpan").textContent = "copied";
     setTimeout(function() {
         document.getElementById("copySpan").textContent = "copy";
-    }, 3000);
-    
+    }, 3000);    
     
     // Copy the text inside the text field
     navigator.clipboard.writeText(copyText.textContent);

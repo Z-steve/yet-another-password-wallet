@@ -188,7 +188,6 @@
                             <label>Email or username</label>
                             <input id="modal-email" class="w3-input" type="text" required=""
                                 maxlength="80">
-                            <i onclick="copyText('modal-email')" class="bi bi-clipboard w3-tooltip w3-center" style="margin-top: 5px; cursor: pointer; display: block;"><span id="copySpan" class="w3-text">copy</span></i>
                             <div id="error-email-or-username" class="error">
                                 <span>
                                     <i class="bi bi-exclamation-circle"></i>
@@ -200,8 +199,9 @@
                         <div class="w3-section">
                             <label>Password</label>
                             <input id="modal-password" class="w3-input" type="password" required=""
-                                maxlength="80"><i class="bi bi-eye-slash" onclick="showPassword()"
-                                id="togglePassword"></i>
+                                maxlength="80"><div class="tooltip">
+                                    <i id="togglePassword" onclick="showPassword()" class="bi bi-eye-slash w3-tooltip w3-center" style="margin-top: 10px; cursor: pointer; display: block;"></i>
+                                    <span id="tooltipPassword" class="tooltiptext">show password</span></div>
                             <div id="error-password" class="error">
                                 <span>
                                     <i class="bi bi-exclamation-circle"></i>
@@ -233,14 +233,17 @@
                 <span onclick="closePasswordModalPopup()" class="w3-button w3-medium w3-display-topright">
                     <i class="fa fa-close"></i>
                 </span>
-                <h4 id="modal-heading" class="w3-center">This is the password to unlock the zip file!</h4>
+                <h4 id="modal-heading" class="w3-center" style="margin-top: 40px;">This is the password to unlock the zip file!</h4>
             </header>
             <div class="w3-padding">
                 <div class="w3-container w3-card w3-white-4">
                     <!-- Password generated for zip file -->
                     <div class="w3-section">
                         <label id="password-generated" class="w3-center"></label>
-                        <i onclick="copyText('password-generated')" class="bi bi-clipboard w3-tooltip w3-center" style="margin-top: 10px; cursor: pointer; display: block;"><span id="copySpan" class="w3-text">copy</span></i>
+                        <div class="tooltip">
+                            <i onclick="copyText('password-generated')" class="bi bi-clipboard w3-tooltip w3-center" style="margin-top: 10px; cursor: pointer; display: block;"></i>
+                            <span id="copySpan" class="tooltiptext">copy</span>
+                        </div>
                     </div>
                 </div>
                 <br>
