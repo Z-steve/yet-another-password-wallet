@@ -293,10 +293,10 @@ function copyText(id) {
 
     // Cambia testo tooltip quando premuto
     document.getElementById("copySpan").textContent = "copied";
-    setTimeout(function() {
+    setTimeout(function () {
         document.getElementById("copySpan").textContent = "copy";
-    }, 3000);    
-    
+    }, 3000);
+
     // Copy the text inside the text field
     navigator.clipboard.writeText(copyText.textContent);
 
@@ -350,43 +350,133 @@ function exportCred() {
 
     // console.log(requestBodyJson);
 
-    // Chiamata AJAX
-
-    fetch('/export', {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(requestBodyJson),
-    })
-    .then(function(response) { 
-        password = response.headers.get('archive-password'); 
-        return response.blob(); 
-    })
-    .then(function (blob) {
-
-        // console.log('blob received');
-
-        // console.log(blob);
-
-        // Trigger download dello zip
-        //download(blob, "credentials.zip", "application/zip");
-        var a = document.createElement("a");
-
-        a.href = window.URL.createObjectURL(blob);
-
-        a.download = "credentials";
-
-        a.click();
-
-        a.remove();
-  
-    })
-    .then(function(response) {
-        // leggere header e printare modalpopup con password generata
-        showPasswordModalPopup(password);
+    var zip = new JSZip();
+    zip.file("credentials.json", JSON.stringify(requestBodyJson));
+    zip.generateAsync({ type: "blob" }).then(function (content) {
+        console.log('contents: ' + content);
+        //saveAs(content, "example.zip");
+        OpenPGPEncryptDataZipFile(content);
     });
+
+    /*
+    if (navigator.onLine) {
+
+        // Chiamata AJAX
+
+        fetch('/export', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestBodyJson),
+        })
+            .then(function (response) {
+                password = response.headers.get('archive-password');
+                return response.blob();
+            })
+            .then(function (blob) {
+
+                // console.log('blob received');
+
+                // console.log(blob);
+
+                // Trigger download dello zip
+                //download(blob, "credentials.zip", "application/zip");
+                var a = document.createElement("a");
+
+                a.href = window.URL.createObjectURL(blob);
+
+                a.download = "credentials";
+
+                a.click();
+
+                a.remove();
+
+            })
+            .then(function (response) {
+                // leggere header e printare modalpopup con password generata
+                showPasswordModalPopup(password);
+            });
+
+    } else {
+
+        // Qui codice per offline
+
+    }
+    */
+
+}
+
+async function OpenPGPEncryptDataZipFile(zipBlob) {
+
+    //var binaryData = new Uint8Array(await zipBlob.arrayBuffer());  
+    //var binaryData = zipBlob;
+
+    /*
+    const encrypted  = await openpgp.encrypt({
+      message: openpgp.message.fromBinary(zipBlob),
+      //await openpgp.createMessage({ binary: binaryData }),      
+      passwords: ['123'],     
+      format: 'binary'
+    });
+    openpgp.message.
+  
+    console.log('encrypted: ' + encrypted);
     
+    var encryptedBlob = new Blob([encrypted], {type: 'application/zip'});    
+    */
+
+
+    /*
+    window.crypto.subtle.importKey(
+        'raw',
+        '123',
+        'AES-GCM',
+        true,
+        ['encrypt', 'decrypt']
+    ).then(
+        (key) => {
+            console.log(key);
+
+            // iv will be needed for decryption
+            const iv = window.crypto.getRandomValues(new Uint8Array(12));
+            window.crypto.subtle.encrypt(
+                { name: "AES-GCM", iv: iv },
+                key,
+                zipBlob,
+            ).then(function(e){
+                saveAs(e, 'credentials.zip');
+
+            }
+
+            );
+
+
+
+        }
+    );
+    */
+
+    /* 
+        var key = "123";
+        var wordArray = CryptoJS.lib.WordArray.create(zipBlob);           // Convert: ArrayBuffer -> WordArray
+        var encrypted = CryptoJS.AES.encrypt(wordArray, key).toString();        // Encryption: I: WordArray -> O: -> Base64 encoded string (OpenSSL-format)
+
+        var encryptedBlob = new Blob([encrypted]);                                    // Create blob from string
+    /*    
+        /*
+        var a = document.createElement("a");
+        var url = window.URL.createObjectURL(fileEnc);
+        var filename = file.name + ".enc";
+        a.href = url;
+        a.download = filename;
+        a.click();
+        window.URL.revokeObjectURL(url);
+        */
+
+
+
+    saveAs(zipBlob, 'credentials.zip');
 
 }
 
