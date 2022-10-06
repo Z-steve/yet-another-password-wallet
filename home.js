@@ -348,15 +348,12 @@ function exportCred() {
 
     }
 
-    // console.log(requestBodyJson);
-
-    
     if (navigator.onLine) {
 
         console.log("we are online");
 
         // Chiamata AJAX
-        
+
         fetch('/export', {
             method: "POST",
             headers: {
@@ -364,144 +361,29 @@ function exportCred() {
             },
             body: JSON.stringify(requestBodyJson),
         })
-            .then(function (response) {
-                password = response.headers.get('archive-password');
-                return response.blob();
-            })
-            .then(function (blob) {
-
-                // console.log('blob received');
-
-                // console.log(blob);
-
-                // Trigger download dello zip
-                //download(blob, "credentials.zip", "application/zip");
-                var a = document.createElement("a");
-
-                a.href = window.URL.createObjectURL(blob);
-
-                a.download = "credentials";
-
-                a.click();
-
-                a.remove();
-
-            })
-            .then(function (response) {
-                // leggere header e printare modalpopup con password generata
-                showPasswordModalPopup(password);
-            });
+        .then(function (response) {
+            password = response.headers.get('archive-password');
+            return response.blob();
+        })
+        .then(function (blob) {
+            var a = document.createElement("a");
+            a.href = window.URL.createObjectURL(blob);
+            a.download = "credentials";
+            a.click();
+            a.remove();
+        })
+        .then(function (response) {
+            // leggere header e printare modalpopup con password generata
+            showPasswordModalPopup(password);
+        });
 
     } else {
-        console.log("we are offline");
 
-        // Qui codice per offline
-        var zip = new JSZip();
-        zip.file("credentials.json", JSON.stringify(requestBodyJson));
-        zip.generateAsync({ type: "blob" }).then(function (content) {
-            console.log('contents: ' + content);
-            //saveAs(content, "example.zip");
-            encryptedZipFile = OpenPGPEncryptDataZipFile(content);
-        });
-    
+        document.getElementById('modal-popup-password-offline').style.display = 'block';
 
     }
-    
-
-}
-
-async function OpenPGPEncryptDataZipFile(zipBlob) {
-
-    var binaryData = new Uint8Array(await zipBlob.arrayBuffer());  
-    // var binaryData = new Uint8Array(zipBlob);  
-
-    
-
-    const encrypted  = await openpgp.encrypt({
-      //message: await openpgp.message.fromBinary(zipBlob),
-      message: await openpgp.createMessage({ binary: binaryData }),      
-      passwords: ['123'],     
-      format: 'binary'
-    });
-    
-  
-    console.log('encrypted: ' + encrypted);
-    
-    var encryptedBlob = new Blob([encrypted], {type: 'text/plain'});    
-    saveAs(encryptedBlob, 'credentials.zip');
-
-
-
-    /*
-    window.crypto.subtle.importKey(
-        'raw',
-        '123',
-        'AES-GCM',
-        true,
-        ['encrypt', 'decrypt']
-    ).then(
-        (key) => {
-            console.log(key);
-
-            // iv will be needed for decryption
-            const iv = window.crypto.getRandomValues(new Uint8Array(12));
-            window.crypto.subtle.encrypt(
-                { name: "AES-GCM", iv: iv },
-                key,
-                zipBlob,
-            ).then(function(e){
-                saveAs(e, 'credentials.zip');
-
-            }
-
-            );
-
-
-
-        }
-    );
-    */
-
-
-    /*
-        var key = "123";
-        var wordArray = CryptoJS.lib.WordArray.create(zipBlob);           // Convert: ArrayBuffer -> WordArray
-        var encrypted = CryptoJS.AES.encrypt(wordArray, key).toString();        // Encryption: I: WordArray -> O: -> Base64 encoded string (OpenSSL-format)
-
-        var encryptedBlob = new Blob([encrypted]);                                    // Create blob from string
-
-    */
-    
-        /*
-        var a = document.createElement("a");
-        var url = window.URL.createObjectURL(fileEnc);
-        var filename = file.name + ".enc";
-        a.href = url;
-        a.download = filename;
-        a.click();
-        window.URL.revokeObjectURL(url);
-        */
-
-
-
 
 }
 
 // Esegui sempre all'inizio
 fillDefaultCred();
-
-
-/*
-window.addEventListener("load", () => {
-    hasNetwork(navigator.onLine);
-
-    window.addEventListener("online", () => {
-        hasNetwork(true);
-    });
-
-    window.addEventListener("offline", () => {
-        hasNetwork(false);
-    });
-});
-
-*/

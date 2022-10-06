@@ -254,6 +254,18 @@
         </div>
     </div>
 
+    <div id="modal-popup-password-offline" class="w3-modal w3-center" style="display: none;">
+        <div class="w3-modal-content w3-card w3-white-4 w3-animate-top">
+            <header class="w3-container">
+                <span onclick="document.getElementById('modal-popup-password-offline').style.display = 'none';" class="w3-button w3-medium w3-display-topright">
+                    <i class="fa fa-close"></i>
+                </span>
+                <h4 id="modal-heading-offline" class="w3-center" style="margin-top: 40px;">You cannot export your credentials because you are offline!</h4>
+            </header>
+            <button onclick="document.getElementById('modal-popup-password-offline').style.display = 'none';" class="w3-button w3-large w3-center">OK</button>
+        </div>
+    </div>
+
     <template id="cred-box-template">
         <div class="w3-third w3-row-padding cred-box">
             <div class="w3-card w3-white w3-container w3-hover-shadow w3-center" style="min-height:200px">
@@ -262,18 +274,6 @@
             </div>
         </div>
     </template>
-
-    <!-- scripts to create zip file frontend -->
-    <script src="jszip.min.js"></script>
-    <script src="FileSaver.min.js"></script>
-
-    <!-- scripts to encrypt zip file frontend -->
-    <script src="zip-full.min.js"></script>
-
-
-    <script src="openpgp.min.js"></script>
-    <script src="core-min.js"></script>
-    <script src="aes-min.js"></script>
     
     <script src="home.js"></script>
 
