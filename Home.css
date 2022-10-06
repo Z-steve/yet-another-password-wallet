@@ -2,7 +2,6 @@ html {
     scroll-behavior: smooth;
 }
 
-
 html,
 body,
 h1,
@@ -77,11 +76,9 @@ body {
     height: 100px;
 }
 
-
-
 .tooltip {
     position: relative;
-    }
+}
   
 .tooltip .tooltiptext {
     visibility: hidden;
@@ -116,10 +113,7 @@ body {
     opacity: 1;
 }
 
-
-
 /* MEDIA QUERIES */
-
 
 @media screen and (min-width: 360px) {
     #credBox {
@@ -163,7 +157,6 @@ body {
         padding-left: 100px;
         padding-right: 100px;
     }
-
 }
 
 @media screen and (min-width: 1440px) {

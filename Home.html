@@ -2,7 +2,7 @@
 
 <head>
     <title>Password Manager</title>
-    <link rel="icon" type="image/x-icon" href="images/icons8-lucchetto-windows-metro-16.png">
+    <link rel="icon" type="image/x-icon" href="images/favicon.png">
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,15 +20,14 @@
     <!-- Our CSS -->
     <link rel="stylesheet" href="home.css">
 
-    <!-- for password visible button icon -->
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
     
 </head>
 
 <body>
 
-    <!-- Header -->
-    <header class="w3-container w3-theme-d2 w3-padding headerPart" id="myHeader">
+    <header class="w3-container w3-theme-d2 w3-padding headerPart">
         <div class="w3-center">
             <h1 class="w3-xxxlarge headerTitle">Protect your passwords</h1>
             <div class="w3-padding-32">
@@ -155,7 +154,6 @@
     <br>
     <br>
 
-    <!-- Footer -->
     <footer class="w3-container w3-theme-dark w3-center footerPart">
         <br>
         <p>Developed by Zsteve an​d Fabrizio</p>
@@ -185,7 +183,7 @@
                                 </span>
                             </div>    
                         </div>
-                        <!-- Email -->
+                        <!-- Email or Username -->
                         <div class="w3-section">
                             <label>Email or username</label>
                             <input id="modal-email" class="w3-input" type="text" required=""
@@ -227,7 +225,6 @@
         </div>
     </div>
 
-
     <!-- Modal Popup Password Template -->
     <div id="modal-popup-password" class="w3-modal w3-center" style="display: none;">
         <div class="w3-modal-content w3-card w3-white-4 w3-animate-top">
@@ -239,7 +236,7 @@
             </header>
             <div class="w3-padding">
                 <div class="w3-container w3-card w3-white-4">
-                    <!-- Password generated for zip file -->
+                    <!-- Password to decrypt the zip file -->
                     <div class="w3-section">
                         <label id="password-generated" class="w3-center"></label>
                         <div class="tooltip">
@@ -254,6 +251,7 @@
         </div>
     </div>
 
+    <!-- Modal Popup Password Offline Template -->
     <div id="modal-popup-password-offline" class="w3-modal w3-center" style="display: none;">
         <div class="w3-modal-content w3-card w3-white-4 w3-animate-top">
             <header class="w3-container">
