@@ -1,7 +1,9 @@
-<html manifest="cache.manifest">
+<html manifest="cache.appcache">
 
 <head>
     <title>Password Manager</title>
+    <link rel="icon" type="image/x-icon" href="images/icons8-lucchetto-windows-metro-16.png">
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -261,12 +263,18 @@
         </div>
     </template>
 
+    <!-- scripts to create zip file frontend -->
     <script src="jszip.min.js"></script>
+    <script src="FileSaver.min.js"></script>
+
+    <!-- scripts to encrypt zip file frontend -->
+    <script src="zip-full.min.js"></script>
+
+
     <script src="openpgp.min.js"></script>
     <script src="core-min.js"></script>
     <script src="aes-min.js"></script>
-    <script src="FileSaver.min.js"></script>
-    <!--<script src="https://js.zapjs.com/js/download.js"></script>    -->
+    
     <script src="home.js"></script>
 
 </body>
