@@ -1,3 +1,4 @@
+// Import Moduli Node JS
 const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
@@ -7,29 +8,28 @@ const generator = require('generate-password');
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Impostazioni Express JS
 app.use(bodyParser.text({ type: "*/json" }));
 app.use(express.static(__dirname));
 
-// Usa plugin zip-encrypted
-// register format for archiver
-// note: only do it once per Node.js process/application, as duplicate registration will throw an error
+// Imposta oggetto archiver per abilitare la cifratura AES 
 archiver.registerFormat('zip-encrypted', require("archiver-zip-encrypted"));
 
+// Endpoint home.html
 app.get('/', (req, res) => {
   res.sendFile(__dirname + "/Home.html");
 });
 
+// Endpoint Export Credentials
 app.post('/export', (req, res) => {
 
-  // Genera password random per l'archivio zip
+  // Genera password random per l'archivio ZIP
   const password = generator.generate({ length: 10, numbers: true });
 
-  console.log(password);
-
-  // Crea archivio zip cifrato
+  // Crea oggetto archivio ZIP cifrato
   let archive = archiver.create('zip-encrypted', { zlib: { level: 8 }, encryptionMethod: 'aes256', password: password });
 
-  // Catch warnings
+  // Catch eventuali warnings
   archive.on('warning', function (err) {
     if (err.code === 'ENOENT') {
       console.log(err);
@@ -38,27 +38,28 @@ app.post('/export', (req, res) => {
     }
   });
 
-  // Catch errors
+  // Catch eventuali errori
   archive.on('error', function (err) {
     throw err;
   });
 
-  // Append file credentials.json con le credenziali
+  // Aggiunge file credentials.json con le credenziali nell'archivio
   archive.append(req.body, { name: 'credentials.json' });
 
-  // Aggiungi header Content-Disposition nella risposta
+  // Aggiunge header Content-Disposition nella risposta
   res.attachment('credentials.zip');
 
-  // Aggiungi header con password dell'archivio nella risposta
+  // Aggiunge header con password dell'archivio nella risposta
   res.setHeader("archive-password", password);
 
   // Imposta stream di scrittura dell'archivio
   archive.pipe(res);
 
+  // Flush oggetto archivio per poter restituire la response al frontend
   archive.finalize();
 
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Yet Another Password Wallet Backend - porta: ${port}`)
 });
