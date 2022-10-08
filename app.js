@@ -17,7 +17,7 @@ archiver.registerFormat('zip-encrypted', require("archiver-zip-encrypted"));
 
 // Endpoint home.html
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + "/Home.html");
+  res.sendFile(__dirname + "/home.html");
 });
 
 // Endpoint Export Credentials
