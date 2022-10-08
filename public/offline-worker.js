@@ -6,7 +6,7 @@ const filesToCache = [
     '/Home.css',
     '/home.js',
     '/images/add.png',
-    '/images/background.jpg',
+    '/images/background.avif',
     '/images/export.png',
     '/images/facebook.png',
     '/images/favicon.png',
