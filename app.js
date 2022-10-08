@@ -4,20 +4,21 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const archiver = require('archiver');
 const generator = require('generate-password');
+const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Impostazioni Express JS
 app.use(bodyParser.text({ type: "*/json" }));
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Imposta oggetto archiver per abilitare la cifratura AES 
 archiver.registerFormat('zip-encrypted', require("archiver-zip-encrypted"));
 
 // Endpoint home.html
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + "/Home.html");
+  res.sendFile(path.join(__dirname, 'public') + "/Home.html");
 });
 
 // Endpoint Export Credentials
