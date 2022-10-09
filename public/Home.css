@@ -45,6 +45,16 @@ body {
     text-shadow: 2px 2px black;
 }
 
+.zoom {
+    transition: transform .2s; /* Animation */
+}
+
+.zoom:hover {
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Safari 3-8 */
+    transform: scale(1.05); 
+}
+
 .error {
     color: red;
     line-height: 1;
@@ -112,6 +122,9 @@ body {
     visibility: visible;
     opacity: 1;
 }
+
+
+
 
 /* MEDIA QUERIES */
 
@@ -195,5 +208,17 @@ body {
     #credBox {
         padding-left: 300px;
         padding-right: 300px;
+    }
+}
+
+
+ /* for landscape orientation */
+@media screen and (min-width:320px) and (max-width:767px) and (orientation:landscape) {
+    #credBox {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    .cred-text {
+        font-size: 20px;
     }
 }
