@@ -33,7 +33,7 @@ body {
 }
 
 .headerPart {
-    background-image: linear-gradient( rgb(0 1 1 / 84%), rgb(0 0 0 / 0%) ), url(images/background.avif);
+    background-image: linear-gradient( rgb(0 1 1 / 84%), rgb(0 0 0 / 0%) ), url(images/background.jpg);
     min-height: 700px;
     background-size: cover;
     background-repeat: no-repeat;
@@ -69,7 +69,7 @@ body {
 }
 
 .footerPart {
-    background-image: linear-gradient( rgb(0 1 1 / 26%), rgb(0 0 0) ), url(images/background.avif);
+    background-image: linear-gradient( rgb(0 1 1 / 26%), rgb(0 0 0) ), url(images/background.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: bottom;
