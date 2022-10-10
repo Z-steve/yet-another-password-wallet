@@ -1,0 +1,13 @@
+{
+    "name": "Password Manager",
+    "short_name": "PM",
+    "display": "standalone",
+    "start_url": "Home.html",
+    "icons": [
+        {
+            "src": "images/lockicon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
