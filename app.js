@@ -1,7 +1,6 @@
 // Import Moduli Node JS
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
 const archiver = require('archiver');
 const generator = require('generate-password');
 const path = require('path');
