@@ -364,7 +364,7 @@ function exportCred() {
     }
 
     // Controlla se il client è online
-    if (navigator.onLine) {
+    //if (navigator.onLine) {
 
         // Chiamata AJAX
         fetch('/export', {
@@ -402,13 +402,13 @@ function exportCred() {
         
         });
 
-    } else {
+    //} else {
 
         // Mostra modal popup per segnalare all'utente
         // l'impossibilità di effettuare l'export delle credenziali offline
-        document.getElementById('modal-popup-password-offline').style.display = 'block';
+        //document.getElementById('modal-popup-password-offline').style.display = 'block';
 
-    }
+    //}
 
 }
 
