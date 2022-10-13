@@ -363,8 +363,10 @@ function exportCred() {
 
     }
 
+    console.log(isAppOnline);
+    
     // Controlla se il client è online
-    if (navigator.onLine) {
+    if (isAppOnline) {
 
         // Chiamata AJAX
         fetch('/export', {
@@ -412,6 +414,13 @@ function exportCred() {
 
 }
 
+// Imposta status app online a true
+var isAppOnline = true;
+
+// Aggiunge event handlers per impostare lo stato isAppOnline
+window.addEventListener('online', (e) => { isAppOnline = true; });
+window.addEventListener('offline', (e) => { isAppOnline = false; });
+
 // Init credenziali all'avvio dell'applicazione
 fillDefaultCred();
 
@@ -426,3 +435,6 @@ if('serviceWorker' in navigator) {
   
     registerServiceWorker();
 }
+
+
+
