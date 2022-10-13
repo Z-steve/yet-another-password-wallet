@@ -33,8 +33,11 @@ self.addEventListener('install', e => {
 self.addEventListener('activate', e => self.clients.claim());
 
 self.addEventListener('fetch', e => {
-    e.respondWith(
+    
+  e.respondWith(
       caches.match(e.request)
       .then(response => response ? response : fetch(e.request))
-    )
-  });
+      .catch(error => console.log(error))
+  );
+
+});

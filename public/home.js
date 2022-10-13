@@ -362,47 +362,60 @@ function exportCred() {
         }
 
     }
-
-    console.log(isAppOnline);
     
     // Controlla se il client è online
-    if (isAppOnline) {
+    if (navigator.onLine) {
 
-        // Chiamata AJAX
-        fetch('/export', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(requestBodyJson),
-        })
-        .then(function (response) {
-            
-            // Leggi header archive-password -> password per aprire il file ZIP cifrato
-            password = response.headers.get('archive-password');
-            
-            return response.blob();
-        })
-        .then(function (blob) {
-            
-            // Crea bottone temporaneo per trigger download
-            var a = document.createElement("a");
-            a.href = window.URL.createObjectURL(blob);
-            a.download = "credentials";
+        try {
 
-            // Click bottone per far partire il download
-            a.click();
+            // Chiamata AJAX
+            fetch('/export', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestBodyJson),
+            })
+            .then(function (response) {
+                
+                // Leggi header archive-password -> password per aprire il file ZIP cifrato
+                password = response.headers.get('archive-password');
+                
+                return response.blob();
+            })
+            .then(function (blob) {
+                
+                // Crea bottone temporaneo per trigger download
+                var a = document.createElement("a");
+                a.href = window.URL.createObjectURL(blob);
+                a.download = "credentials";
+    
+                // Click bottone per far partire il download
+                a.click();
+                
+                // Rimuovi bottone
+                a.remove();
             
-            // Rimuovi bottone
-            a.remove();
-        
-        })
-        .then(function (response) {
+            })
+            .then(function (response) {
+                
+                // Mostra password file ZIP in un modal popup
+                showPasswordModalPopup(password);
             
-            // Mostra password file ZIP in un modal popup
-            showPasswordModalPopup(password);
-        
-        });
+            })
+            .catch(function(error) {
+                
+                console.log(error);
+    
+                // Mostra modal popup per segnalare all'utente
+                // l'impossibilità di effettuare l'export delle credenziali offline
+                document.getElementById('modal-popup-password-offline').style.display = 'block';
+    
+            });
+    
+        } catch(error){
+            console.log(error);
+        }
 
     } else {
 
@@ -413,13 +426,6 @@ function exportCred() {
     }
 
 }
-
-// Imposta status app online a true
-var isAppOnline = true;
-
-// Aggiunge event handlers per impostare lo stato isAppOnline
-window.addEventListener('online', (e) => { isAppOnline = true; });
-window.addEventListener('offline', (e) => { isAppOnline = false; });
 
 // Init credenziali all'avvio dell'applicazione
 fillDefaultCred();
