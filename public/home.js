@@ -369,7 +369,7 @@ function exportCred() {
         try {
 
             // Chiamata AJAX
-            fetch('yet-another-password-wallet/export', {
+            fetch('yet-another-password-wallet/public/export', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
