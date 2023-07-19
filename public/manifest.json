@@ -2,7 +2,7 @@
     "name": "Password Manager",
     "short_name": "PM",
     "display": "standalone",
-    "start_url": "Home.html",
+    "start_url": "index.html",
     "icons": [
         {
             "src": "images/lockicon.png",
