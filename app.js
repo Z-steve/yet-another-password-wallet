@@ -15,9 +15,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Imposta oggetto archiver per abilitare la cifratura AES 
 archiver.registerFormat('zip-encrypted', require("archiver-zip-encrypted"));
 
-// Endpoint home.html
+// Endpoint index.html
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public') + "/Home.html");
+  res.sendFile(path.join(__dirname, 'public') + "/index.html");
 });
 
 // Endpoint Export Credentials
