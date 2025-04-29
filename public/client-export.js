@@ -20,7 +20,10 @@ function clientExportCredentials() {
     });
     
     // Add credentials.json to the zip
-    zipWriter.add("credentials.json", new zip.TextReader(JSON.stringify(credentials, null, 2)));
+    zipWriter.add("credentials.json", new zip.TextReader(JSON.stringify(credentials, null, 2)), {
+        password: password,
+        encryptionMethod: zip.EncryptionMethod.AES
+    });
     
     // Close the ZIP writer and get the blob
     zipWriter.close().then(function(blob) {

@@ -279,6 +279,10 @@
     <script src="home.js"></script>
     <!-- Required libraries for password-protected ZIP creation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/zip.js/2.7.0/zip.min.js"></script>
+    <script>
+        // Initialize zip.js
+        zip.workerScriptsPath = "https://cdnjs.cloudflare.com/ajax/libs/zip.js/2.7.0/";
+    </script>
     <!-- Our client-side export functionality -->
     <script src="client-export.js"></script>
 
