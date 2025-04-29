@@ -1,4 +1,3 @@
-
 // Aggiungi una nuova credenziale nella cred box
 function addCredToCredBox(credBoxId, credName) {
 
@@ -347,84 +346,54 @@ function fillModalPopup(credBoxId) {
 
 // Funzione per esportare tutte le credenziali in uno ZIP cifrato
 function exportCred() {
-
+    // Use client-side export functionality
+    clientExportCredentials();
+    
+    /*
+    // Original server-side export code (kept for reference)
     // Oggetto JSON con tutte le credenziali da esportare
     var requestBodyJson = {};
     var password;
 
     // Leggi credenziali dal LocalStorage
     for (var i = 0; i < localStorage.length; i++) {
-
         var key = localStorage.key(i);
-
         if (key !== "defaultFilled") {
             requestBodyJson[key] = JSON.parse(localStorage.getItem(key));
         }
-
-    }
-    
-    // Controlla se il client è online
-    if (navigator.onLine) {
-
-        try {
-
-            // Chiamata AJAX
-            fetch('/public/export', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(requestBodyJson),
-            })
-            .then(function (response) {
-                
-                // Leggi header archive-password -> password per aprire il file ZIP cifrato
-                password = response.headers.get('archive-password');
-                
-                return response.blob();
-            })
-            .then(function (blob) {
-                
-                // Crea bottone temporaneo per trigger download
-                var a = document.createElement("a");
-                a.href = window.URL.createObjectURL(blob);
-                a.download = "credentials";
-    
-                // Click bottone per far partire il download
-                a.click();
-                
-                // Rimuovi bottone
-                a.remove();
-            
-            })
-            .then(function (response) {
-                
-                // Mostra password file ZIP in un modal popup
-                showPasswordModalPopup(password);
-            
-            })
-            .catch(function(error) {
-                
-                console.log(error);
-    
-                // Mostra modal popup per segnalare all'utente
-                // l'impossibilità di effettuare l'export delle credenziali offline
-                document.getElementById('modal-popup-password-offline').style.display = 'block';
-    
-            });
-    
-        } catch(error){
-            console.log(error);
-        }
-
-    } else {
-
-        // Mostra modal popup per segnalare all'utente
-        // l'impossibilità di effettuare l'export delle credenziali offline
-        document.getElementById('modal-popup-password-offline').style.display = 'block';
-
     }
 
+    // Fetch API per chiamare endpoint export
+    fetch('/export', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBodyJson)
+    })
+    .then(function (response) {
+        // Leggi header archive-password -> password per aprire il file ZIP cifrato
+        password = response.headers.get('archive-password');
+        return response.blob();
+    })
+    .then(function (blob) {
+        // Crea bottone temporaneo per trigger download
+        var a = document.createElement("a");
+        a.href = window.URL.createObjectURL(blob);
+        a.download = "credentials";
+        // Click bottone per far partire il download
+        a.click();
+        // Rimuovi bottone
+        a.remove();
+    })
+    .then(function (response) {
+        // Mostra popup con password per aprire il file ZIP
+        showPasswordModalPopup(password);
+    })
+    .catch(function (error) {
+        console.log('Error:', error);
+    });
+    */
 }
 
 // Init credenziali all'avvio dell'applicazione
