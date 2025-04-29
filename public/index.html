@@ -277,8 +277,10 @@
     </template>
     
     <script src="home.js"></script>
-    <!-- JSZip library for client-side ZIP creation with encryption support -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <!-- Required libraries for password-protected ZIP creation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/zip-encrypted@1.0.0/dist/zip-encrypted.min.js"></script>
     <!-- Our client-side export functionality -->
     <script src="client-export.js"></script>
 

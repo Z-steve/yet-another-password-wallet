@@ -12,28 +12,17 @@ function clientExportCredentials() {
     // Generate a random password for the ZIP file
     const password = generateRandomPassword();
     
-    // Create a new JSZip instance
-    const zip = new JSZip();
-    
-    // Add credentials.json to the zip with proper formatting
-    zip.file("credentials.json", JSON.stringify(credentials, null, 2));
-    
-    // Generate the zip file with password protection
-    zip.generateAsync({
-        type: "blob",
-        compression: "DEFLATE",
-        compressionOptions: {
-            level: 9
-        },
-        encryption: "AES-256",
+    // Create the ZIP file with password protection
+    const zip = new ZipEncrypted({
         password: password,
-        // Add these options to ensure encryption is applied
-        encrypt: true,
-        encryptOptions: {
-            password: password,
-            strength: 3 // Maximum encryption strength
-        }
-    }).then(function(content) {
+        encryption: 'AES-256'
+    });
+    
+    // Add credentials.json to the zip
+    zip.addFile('credentials.json', JSON.stringify(credentials, null, 2));
+    
+    // Generate and download the zip file
+    zip.generateAsync().then(function(content) {
         // Create download link
         const a = document.createElement("a");
         a.href = URL.createObjectURL(content);
