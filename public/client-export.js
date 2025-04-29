@@ -1,7 +1,13 @@
 // Client-side export functionality
 function clientExportCredentials() {
     // Get all credentials from localStorage
-    const credentials = JSON.parse(localStorage.getItem('credentials') || '[]');
+    const credentials = {};
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key !== "defaultFilled") {
+            credentials[key] = JSON.parse(localStorage.getItem(key));
+        }
+    }
     
     // Generate a random password for the ZIP file
     const password = generateRandomPassword();
@@ -9,10 +15,10 @@ function clientExportCredentials() {
     // Create a new JSZip instance
     const zip = new JSZip();
     
-    // Add credentials.json to the zip
+    // Add credentials.json to the zip with proper formatting
     zip.file("credentials.json", JSON.stringify(credentials, null, 2));
     
-    // Generate the zip file
+    // Generate the zip file with password protection
     zip.generateAsync({
         type: "blob",
         compression: "DEFLATE",
