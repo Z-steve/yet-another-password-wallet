@@ -26,7 +26,13 @@ function clientExportCredentials() {
             level: 9
         },
         encryption: "AES-256",
-        password: password
+        password: password,
+        // Add these options to ensure encryption is applied
+        encrypt: true,
+        encryptOptions: {
+            password: password,
+            strength: 3 // Maximum encryption strength
+        }
     }).then(function(content) {
         // Create download link
         const a = document.createElement("a");
