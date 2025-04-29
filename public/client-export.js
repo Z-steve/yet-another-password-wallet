@@ -12,33 +12,38 @@ function clientExportCredentials() {
     // Generate a random password for the ZIP file
     const password = generateRandomPassword();
     
-    // Convert credentials to string
-    const credentialsStr = JSON.stringify(credentials, null, 2);
+    // Create a new JSZip instance
+    const zip = new JSZip();
     
-    // Create a ZIP file with password protection
-    const zip = new fflate.Zip();
+    // Add credentials.json to the zip
+    zip.file("credentials.json", JSON.stringify(credentials, null, 2));
     
-    // Add the file with password protection
-    zip.addFile("credentials.json", fflate.strToU8(credentialsStr), {
-        password: password,
-        encryption: true
+    // Generate the zip file with password protection
+    zip.generateAsync({
+        type: "blob",
+        compression: "DEFLATE",
+        compressionOptions: {
+            level: 9
+        },
+        // Use CryptoJS to encrypt the content before adding to ZIP
+        encryption: {
+            password: password,
+            algorithm: "AES-256"
+        }
+    }).then(function(content) {
+        // Create download link
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(content);
+        a.download = "credentials.zip";
+        
+        // Trigger download
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        // Show password to user
+        showPasswordModalPopup(password);
     });
-    
-    // Generate the ZIP file
-    const zipData = zip.zip();
-    
-    // Create download link
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([zipData], { type: 'application/zip' }));
-    a.download = "credentials.zip";
-    
-    // Trigger download
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    
-    // Show password to user
-    showPasswordModalPopup(password);
 }
 
 function generateRandomPassword() {
