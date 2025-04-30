@@ -12,13 +12,26 @@ function clientExportCredentials() {
     // Generate a random password for the ZIP file
     const password = generateRandomPassword();
     
-    // Create a new JSZip instance with encryption support
+    // Create a new JSZip instance
     const zip = new JSZip();
     
-    // Add credentials.json to the zip
-    zip.file("credentials.json", JSON.stringify(credentials, null, 2));
+    // Encrypt the credentials JSON using CryptoJS
+    const encryptedData = CryptoJS.AES.encrypt(
+        JSON.stringify(credentials, null, 2),
+        password
+    ).toString();
     
-    // Generate the zip file with password protection
+    // Add the encrypted data to the zip
+    zip.file("encrypted_credentials.json", encryptedData);
+    
+    // Add a README file with instructions
+    zip.file("README.txt", "This ZIP file contains encrypted credentials.\n" +
+        "To decrypt the credentials:\n" +
+        "1. Extract the encrypted_credentials.json file\n" +
+        "2. Use the password shown in the popup to decrypt the file\n" +
+        "3. The decrypted file will contain your credentials");
+    
+    // Generate the zip file
     zip.generateAsync({
         type: "blob",
         compression: "DEFLATE",
@@ -26,25 +39,15 @@ function clientExportCredentials() {
             level: 9
         }
     }).then(function(content) {
-        // Create a temporary file input to encrypt the zip
-        const fileInput = document.createElement('input');
-        fileInput.type = 'file';
-        fileInput.accept = '.zip';
+        // Create download link
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(content);
+        a.download = "encrypted_credentials.zip";
         
-        // Create a temporary file
-        const blob = new Blob([content], { type: 'application/zip' });
-        const url = URL.createObjectURL(blob);
-        
-        // Create a temporary download link
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'temp.zip';
-        
-        // Add to body and trigger download
+        // Trigger download
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        URL.revokeObjectURL(url);
         
         // Show password to user
         showPasswordModalPopup(password);
@@ -60,4 +63,4 @@ function generateRandomPassword() {
         password += charset[randomIndex];
     }
     return password;
-} 
+}
