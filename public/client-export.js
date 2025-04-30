@@ -28,8 +28,12 @@ function clientExportCredentials() {
     zip.file("README.txt", "This ZIP file contains encrypted credentials.\n" +
         "To decrypt the credentials:\n" +
         "1. Extract the encrypted_credentials.json file\n" +
-        "2. Use the password shown in the popup to decrypt the file\n" +
-        "3. The decrypted file will contain your credentials");
+        "2. Open the password manager website\n" +
+        "3. Click the 'Decrypt Credentials' button\n" +
+        "4. Select the encrypted_credentials.json file\n" +
+        "5. Enter the password shown in the popup when you exported the file\n" +
+        "6. The decrypted file will be downloaded as decrypted_credentials.json\n" +
+        "7. Open the decrypted file with any text editor to view your credentials");
     
     // Generate the zip file
     zip.generateAsync({

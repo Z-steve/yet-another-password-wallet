@@ -48,13 +48,35 @@ function decryptCredentials() {
     fileInput.click();
 }
 
-// Add a button to decrypt the file
+// Add a decrypt button that matches the export button's style
 document.addEventListener('DOMContentLoaded', function() {
-    const decryptButton = document.createElement('button');
-    decryptButton.innerHTML = 'Decrypt Credentials';
-    decryptButton.className = 'w3-button w3-large w3-center';
-    decryptButton.onclick = decryptCredentials;
+    // Create decrypt button container
+    const decryptContainer = document.createElement('div');
+    decryptContainer.className = 'w3-third w3-row-padding cred-box';
+    decryptContainer.onclick = decryptCredentials;
     
-    // Add the button to the page (you might want to adjust the placement)
-    document.body.appendChild(decryptButton);
+    // Create the card
+    const card = document.createElement('div');
+    card.className = 'w3-card w3-white w3-container w3-hover-shadow w3-center zoom';
+    card.style.minHeight = '200px';
+    
+    // Add the icon
+    const icon = document.createElement('img');
+    icon.className = 'cred-icon w3-center';
+    icon.src = 'images/decrypt.png';
+    icon.alt = 'decrypt-icon';
+    
+    // Add the text
+    const text = document.createElement('h3');
+    text.className = 'cred-text w3-center';
+    text.textContent = 'DECRYPT';
+    
+    // Append elements
+    card.appendChild(icon);
+    card.appendChild(text);
+    decryptContainer.appendChild(card);
+    
+    // Find the export button's container and insert decrypt button next to it
+    const exportContainer = document.querySelector('#export-creds');
+    exportContainer.parentNode.insertBefore(decryptContainer, exportContainer.nextSibling);
 });
