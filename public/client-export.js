@@ -25,11 +25,8 @@ function clientExportCredentials() {
         compressionOptions: {
             level: 9
         },
-        // Use CryptoJS to encrypt the content before adding to ZIP
-        encryption: {
-            password: password,
-            algorithm: "AES-256"
-        }
+        password: password,
+        encryption: "AES-256"
     }).then(function(content) {
         // Create download link
         const a = document.createElement("a");
