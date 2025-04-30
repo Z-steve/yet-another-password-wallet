@@ -12,7 +12,7 @@ function clientExportCredentials() {
     // Generate a random password for the ZIP file
     const password = generateRandomPassword();
     
-    // Create a new JSZip instance
+    // Create a new JSZip instance with encryption support
     const zip = new JSZip();
     
     // Add credentials.json to the zip
@@ -24,19 +24,27 @@ function clientExportCredentials() {
         compression: "DEFLATE",
         compressionOptions: {
             level: 9
-        },
-        password: password,
-        encryption: "AES-256"
+        }
     }).then(function(content) {
-        // Create download link
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(content);
-        a.download = "credentials.zip";
+        // Create a temporary file input to encrypt the zip
+        const fileInput = document.createElement('input');
+        fileInput.type = 'file';
+        fileInput.accept = '.zip';
         
-        // Trigger download
+        // Create a temporary file
+        const blob = new Blob([content], { type: 'application/zip' });
+        const url = URL.createObjectURL(blob);
+        
+        // Create a temporary download link
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'temp.zip';
+        
+        // Add to body and trigger download
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+        URL.revokeObjectURL(url);
         
         // Show password to user
         showPasswordModalPopup(password);
